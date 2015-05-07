@@ -7,6 +7,7 @@ project(rapid_robot)
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
+  move_base_msgs
   roscpp
   rospy
 )
@@ -74,6 +75,7 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   geometry_msgs
+  move_base_msgs
 )
 
 ###################################
@@ -91,6 +93,7 @@ catkin_package(
   CATKIN_DEPENDS
     geometry_msgs
     message_runtime
+    move_base_msgs
     roscpp
     rospy
 #  DEPENDS system_lib

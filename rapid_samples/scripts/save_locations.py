@@ -28,25 +28,6 @@ def ask_command():
     return parse_command(command_input)
 
 
-#def get_current_location(tf_listener):
-#    try:
-#        pose_stamped = PoseStamped()
-#        pose_stamped.header.frame_id = 'base_footprint'
-#        pose_stamped.header.stamp = rospy.Time(0)
-#        pose_stamped.pose.position.x = 0
-#        pose_stamped.pose.position.y = 0
-#        pose_stamped.pose.position.z = 0
-#        pose_stamped.pose.orientation.w = 1
-#        pose_stamped.pose.orientation.x = 0
-#        pose_stamped.pose.orientation.y = 0
-#        pose_stamped.pose.orientation.z = 0
-#        current_location = tf_listener.transformPose('/map', pose_stamped)
-#        return current_location
-#    except:
-#        rospy.logerr('Failed to get current location.')
-#        return None
-
-
 def set_location(db, name, location):
     db.set_location(name, location)
 
@@ -83,7 +64,6 @@ if __name__ == '__main__':
                         help='Python shelve DB containing locations.')                                                              
     args = parser.parse_args(args=rospy.myargv()[1:])
 
-#    tf_listener = tf.TransformListener()
     db = robot.navigation.LocationDb(args.filename)
 
     while True:

@@ -1,11 +1,4 @@
 <launch>
-  <group ns="rapid_robot">
-    <group ns="navigation">
-      <node pkg="rapid_turtlebot" type="location_db_service.py" name="location_db" args="/home/jstn/data/rapid_robot/locations.db" />
-      <node pkg="rapid_turtlebot" type="current_pose_service.py" name="current_pose" />
-    </group>
-  </group>
-
   <!-- Use sim time. -->
   <param name="/use_sim_time" value="true" />
 

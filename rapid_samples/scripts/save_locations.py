@@ -22,6 +22,7 @@ def ask_command():
     print 'Get location {name}:            get {name}'
     print 'List locations:                 list'
     print 'Remove location {name}:         remove {name}'
+    print 'Go to location {name}:          goto {name}'
     print 'Quit:                           quit'
     command_input = raw_input('Enter command: ')
     return parse_command(command_input)
@@ -67,6 +68,10 @@ def remove_location(db, name):
     db.remove_location(name)
 
 
+def go_to_location(pose_stamped):
+    robot.navigation.go_to(pose_stamped)
+
+
 if __name__ == '__main__':
     rospy.init_node('save_locations')
     parser = argparse.ArgumentParser()                                                                                              
@@ -92,6 +97,9 @@ if __name__ == '__main__':
             list_locations(db)
         elif command == 'remove':
             remove_location(db, name)
+        elif command == 'goto':
+            pose_stamped = db.get_location(name)
+            go_to_location(pose_stamped)
         elif command == 'quit':
             break
         else:

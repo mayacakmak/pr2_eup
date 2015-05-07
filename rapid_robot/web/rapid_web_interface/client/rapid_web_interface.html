@@ -29,6 +29,11 @@
 <div class="ask_choice_container">
   <div class="jumbotron">
     <p class="message">{{message}}</p>
+    <form class="select-choice">
+      {{#each choices}}
+      <button class="btn btn-default btn-lg btn-block" value="{{.}}">{{.}}</button>
+      {{/each}}
+    </form>
   </div>
 </div>
 </template>

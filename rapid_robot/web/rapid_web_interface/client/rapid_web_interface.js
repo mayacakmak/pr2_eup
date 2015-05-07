@@ -1,3 +1,22 @@
+var ros = new ROSLIB.Ros({
+  url : 'ws://localhost:9090'
+});
+ros.on('connection', function() {
+  console.log('Connected to websocket server.');
+});
+ros.on('error', function(error) {
+  console.log('Error connecting to websocket server: ', error);
+});
+ros.on('close', function() {
+  console.log('Connection to websocket server closed.');
+});
+
+var view_publisher = new ROSLIB.Topic({
+  ros: ros,
+  name: 'rapid_robot/interface/interface_submission',
+  messageType: 'rapid_robot/InterfaceSubmission'
+});
+
 if (Meteor.isClient) {
   Template.body.helpers({
     interface_type: function() {
@@ -13,20 +32,6 @@ if (Meteor.isClient) {
     Session.setDefault('interface_type', 'default');
     Session.setDefault('interface_params', {});
 
-    var ros = new ROSLIB.Ros({
-      url : 'ws://localhost:9090'
-    });
-    ros.on('connection', function() {
-      console.log('Connected to websocket server.');
-    });
-    ros.on('error', function(error) {
-      console.log('Error connecting to websocket server: ', error);
-    });
-    ros.on('close', function() {
-      console.log('Connection to websocket server closed.');
-    });
-    this.ros = ros;
-
     this.view_listener = new ROSLIB.Topic({
       ros: ros,
       name: 'rapid_robot/interface/interface_params',
@@ -39,16 +44,30 @@ if (Meteor.isClient) {
       for (var i=0; i<message.keys.length; i+=1) {
         var key = message.keys[i];
         var value = message.values[i];
+        if (message.interface_type === 'ask_choice') {
+          if (key === 'choices') {
+            value = JSON.parse(value);
+          }
+        }
         params[key] = value;
       }
       Session.set('interface_params', params);
     });
 
-    this.view_publisher = new ROSLIB.Topic({
-      ros: ros,
-      name: 'rapid_robot/interface/interface_submissions',
-      messageType: 'rapid_robot/InterfaceSubmissions'
-    });
+  });
+
+  Template.ask_choice.events({
+    'click .select-choice': function(event) {
+      var submission = new ROSLIB.Message({
+        interface_type: 'ask_choice',
+        keys: ['choice'],
+        values: [event.target.value]
+      });
+      console.log(submission);
+      view_publisher.publish(submission);
+    
+      return false;
+    }
   });
 }
 

@@ -1,17 +1,17 @@
 if (Meteor.isClient) {
   Template.body.helpers({
     interface_type: function() {
-      return Template.instance().interface_type.get();
+      return Session.get('interface_type');
     },
     interface_params: function() {
-      return Template.instance().interface_params.keys;
+      return Session.get('interface_params');
     }
   });
 
   Template.body.onCreated(function() {
     var that = this;
-    this.interface_type = new ReactiveVar('default');
-    this.interface_params = new ReactiveDict();
+    Session.setDefault('interface_type', 'default');
+    Session.setDefault('interface_params', {});
 
     var ros = new ROSLIB.Ros({
       url : 'ws://localhost:9090'
@@ -29,24 +29,25 @@ if (Meteor.isClient) {
 
     this.view_listener = new ROSLIB.Topic({
       ros: ros,
-      name: 'interface/interface_params',
-      messageType: 'rapid_turtlebot_msgs/InterfaceParams'
+      name: 'rapid_robot/interface/interface_params',
+      messageType: 'rapid_robot/InterfaceParams'
     });
 
     this.view_listener.subscribe(function(message) {
-      that.interface_type.set(message.interface_type);
-      that.interface_params = new ReactiveDict();
+      Session.set('interface_type', message.interface_type);
+      var params = {}
       for (var i=0; i<message.keys.length; i+=1) {
         var key = message.keys[i];
         var value = message.values[i];
-        that.interface_params.set(key, value);
+        params[key] = value;
       }
+      Session.set('interface_params', params);
     });
 
     this.view_publisher = new ROSLIB.Topic({
       ros: ros,
-      name: 'interface/interface_submissions',
-      messageType: 'rapid_turtlebot_msgs/InterfaceSubmissions'
+      name: 'rapid_robot/interface/interface_submissions',
+      messageType: 'rapid_robot/InterfaceSubmissions'
     });
   });
 }

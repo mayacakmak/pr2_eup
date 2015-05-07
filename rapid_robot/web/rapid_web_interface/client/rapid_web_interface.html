@@ -1,15 +1,34 @@
 <head>
   <title>Turtlebot web interface</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-  {{> Template.dynamic template=interface_type data=interface_params}}
+  <div class="container">
+    {{> Template.dynamic template=interface_type data=interface_params}}
+  </div>
 </body>
 
 <template name="default">
-  Turtlebot
+<div class="default_container">
+  <div class="jumbotron">
+    <h1>Turtlebot</h1>
+  </div>
+</div>
 </template>
 
 <template name="display_message">
-  Message: {{message}}
+<div class="display_message_container">
+  <div class="jumbotron">
+    <p class="message">{{message}}</p>
+  </div>
+</div>
+</template>
+
+<template name="ask_choice">
+<div class="ask_choice_container">
+  <div class="jumbotron">
+    <p class="message">{{message}}</p>
+  </div>
+</div>
 </template>

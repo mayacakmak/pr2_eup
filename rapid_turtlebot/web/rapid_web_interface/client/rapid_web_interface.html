@@ -1,0 +1,15 @@
+<head>
+  <title>Turtlebot web interface</title>
+</head>
+
+<body>
+  {{> Template.dynamic template=interface_type data=interface_params}}
+</body>
+
+<template name="default">
+  Turtlebot
+</template>
+
+<template name="display_message">
+  Message: {{message}}
+</template>

@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find turtlebot_navigation)/launch/includes/gmapping.launch.xml"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rapid_turtlebot_navigation)/config/navigation.rviz"/>
+</launch>

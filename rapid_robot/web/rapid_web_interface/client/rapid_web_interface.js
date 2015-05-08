@@ -48,6 +48,9 @@ if (Meteor.isClient) {
           if (key === 'choices') {
             value = JSON.parse(value);
           }
+          if (key === 'prompt_id') {
+            Session.set('prompt_id', value);
+          }
         }
         params[key] = value;
       }
@@ -60,10 +63,9 @@ if (Meteor.isClient) {
     'click .select-choice': function(event) {
       var submission = new ROSLIB.Message({
         interface_type: 'ask_choice',
-        keys: ['choice'],
-        values: [event.target.value]
+        keys: ['choice', 'prompt_id'],
+        values: [event.target.value, Session.get('prompt_id')]
       });
-      console.log(submission);
       view_publisher.publish(submission);
     
       return false;

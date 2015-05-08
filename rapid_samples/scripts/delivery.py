@@ -1,41 +1,41 @@
 #!/usr/bin/env python
 import argparse
 import rospy
-import rapid_robot as robot
+import rapid_robot
 
-def main(location_db):
+def main(robot, location_db):
     while True:
-      do_delivery(location_db)
+      do_delivery(robot, location_db)
 
-def do_delivery(location_db):
+def do_delivery(robot, location_db):
     location_names = [name for name, location in location_db.get_all_locations()]
     location = robot.interface.ask_choice('Please choose a location.', location_names)
-    robot.interface.ask_choice('Load the items and press "Ready".', ['Ready'])
+    print 'Location: ', location
+    choice = robot.interface.ask_choice('Load the items and press "Ready".', ['Ready'])
+    print 'Ready: ', choice
     pose_stamped = location_db.get_location(location)
     robot.navigation.go_to(pose_stamped)
 
-    robot.interface.display_message('Going home now.', seconds=10)
-    pose_stamped = location_db.get_location('Home')
-    robot.navigation.go_to(pose_stamped)
-    #def items_collected():
-    #    robot.interface.ask_choice('Here are your items. Press "Done" once you have your items.', ['Done'])
-    #result = robot.wait_for_event(items_collected, 10)
-    #if result == 'timeout':
-    #    robot.interface.display_message('Timed out.', time=10)
-    #    robot.navigation.go_to('home')
-    #else:
-    #    robot.interface.display_message('Going home now.', time=10)
-    #    robot.navigation.go_to('home')
+    def items_collected():
+        robot.interface.ask_choice('Here are your items. Press "Done" once you have your items.', ['Done'])
+    delivery_complete, result = robot.wait_for_event(items_collected, 10)
+    home_pose = location_db.get_location('Home')
+    if not delivery_complete:
+        robot.interface.say_message('Timed out.', timeout=10)
+        robot.navigation.go_to(home_pose)
+    else:
+        robot.interface.say_message('Going home now.', timeout=10)
+        robot.navigation.go_to(home_pose)
 
 
 if __name__ == '__main__':
     rospy.init_node('delivery')
-    robot.init()
+    robot = rapid_robot.RobotFactory().build()
     parser = argparse.ArgumentParser()
     parser.add_argument('filename',
                         metavar='FILE',
                         type=str,
                         help='Python shelve DB containing locations.')
     args = parser.parse_args(args=rospy.myargv()[1:])
-    location_db = robot.navigation.LocationDb(args.filename)
-    main(location_db)
+    location_db = robot.location_db(args.filename)
+    main(robot, location_db)

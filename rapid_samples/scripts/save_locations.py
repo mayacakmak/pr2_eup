@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from geometry_msgs.msg import PoseStamped
 import argparse
-import rapid_robot as robot
+import rapid_robot
 import rospy
 import tf
 
@@ -49,27 +49,27 @@ def remove_location(db, name):
     db.remove_location(name)
 
 
-def go_to_location(pose_stamped):
+def go_to_location(robot, pose_stamped):
     robot.navigation.go_to(pose_stamped)
 
 
 if __name__ == '__main__':
     rospy.init_node('save_locations')
-    robot.init()
+    robot = rapid_robot.RobotFactory().build()
 
     parser = argparse.ArgumentParser()                                                                                              
     parser.add_argument('filename',
-                        metavar='FILE',                                                                                             
+                        metavar='FILE',
                         type=str,
                         help='Python shelve DB containing locations.')                                                              
     args = parser.parse_args(args=rospy.myargv()[1:])
 
-    db = robot.navigation.LocationDb(args.filename)
+    db = robot.location_db(args.filename)
 
     while True:
         command, name = ask_command()
         if command == 'set':
-            location = robot.navigation.get_current_pose()
+            location = robot.navigation.get_current_location()
             if location is None:
                 continue
             set_location(db, name, location)
@@ -81,7 +81,7 @@ if __name__ == '__main__':
             remove_location(db, name)
         elif command == 'goto':
             pose_stamped = db.get_location(name)
-            go_to_location(pose_stamped)
+            go_to_location(robot, pose_stamped)
         elif command == 'quit':
             break
         else:

@@ -1,12 +1,11 @@
-from .. import rapid_ros
 import rospy
 import shelve
-import tf
 
 
 class LocationDb(object):
-    def __init__(self, db_filename):
+    def __init__(self, db_filename, tf_listener):
         self._db = shelve.open(db_filename)
+        self._tf_listener = tf_listener
 
     def get_all_locations(self):
         return self._db.items()
@@ -28,7 +27,7 @@ class LocationDb(object):
         if rospy.resolve_name(pose_stamped.header.frame_id) != '/map':
             pose_stamped.header.stamp = rospy.Time(0)
             try:
-                pose_stamped = rapid_ros.tf_listener.transformPose(
+                pose_stamped = self._tf_listener.transformPose(
                     '/map', pose_stamped)
             except:
                 rospy.logerr(

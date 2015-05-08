@@ -81,7 +81,6 @@ class Interface(object):
                 break
             response_prompt_id = params['prompt_id']
             if response_prompt_id != prompt_id:
-                rospy.loginfo('Skipping old message')
                 continue
             if 'choice' not in params:
                 rospy.logerr('[Interface]: no choice given.')

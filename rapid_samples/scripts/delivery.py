@@ -10,8 +10,8 @@ def main(robot, location_db):
 def do_delivery(robot, location_db):
     location_names = [name for name, location in location_db.get_all_locations()]
     location = robot.interface.ask_choice('Please choose a location.', location_names)
+    rospy.loginfo('Delivering item to {}'.format(location))
     choice = robot.interface.ask_choice('Load the items and press "Ready".', ['Ready'])
-    rospy.loginfo('Delivering item to {}'.format(choice))
     pose_stamped = location_db.get_location(location)
     robot.navigation.go_to(pose_stamped)
 

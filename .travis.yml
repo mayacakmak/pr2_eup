@@ -51,7 +51,8 @@ install:
 
 # Command to run tests
 # --------------------
-#script:
+script:
+    - catkin_make
 # Real tests: crash because of Gazebo bugs
 #    - roslaunch pr2_pbd_interaction simulated_robot.launch gui:=false
 # Debug: trying to just run gazebo's table object launch (Gazebo bugs)

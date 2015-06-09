@@ -18,6 +18,9 @@ cache: apt
 before_install:
     - sudo apt-get --purge remove mongodb-10gen postgresql-9.2 postgresql-contrib-9.2 postgresql-9.3 postgresql-contrib-9.3
 
+notifications:
+  email: false
+
 # Commands to install dependencies
 # --------------------------------
 install:

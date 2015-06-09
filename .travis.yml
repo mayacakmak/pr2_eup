@@ -19,11 +19,8 @@ before_install: # Use this to prepare the system to install prerequisites or dep
     # Define some config vars
     - sudo apt-get --purge remove mongodb-10gen postgresql-9.2 postgresql-contrib-9.2 postgresql-9.3 postgresql-contrib-9.3
     - export ROS_DISTRO=hydro
-    - export CI_SOURCE_PATH=$(pwd)
-    - export REPOSITORY_NAME=${PWD##*/}
     # Settings to make installing script more general.
     - export ROS_CI_DESKTOP=`lsb_release -cs`  # e.g. 'precise'
-    - export ROS_CI_PREFIX=ros-${ROS_DISTRO}-  # e.g. 'ros-groovy-'
 
 notifications:
   email: false
@@ -36,11 +33,10 @@ install:
     - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
     - sudo apt-get update -qq
     - sudo apt-get install -qq -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin ros-$ROS_DISTRO-ros
+    - source /opt/ros/$ROS_DISTRO/setup.bash
     # Setup rosdep
     - sudo rosdep init
     - rosdep update
-    # Install catkin_tools
-    - pip install -U catkin_tools
     # Create workspace.
     - mkdir -p ~/catkin_ws/src
     - cd ~/catkin_ws/src
@@ -55,11 +51,7 @@ install:
 
 # Command to run tests
 # --------------------
-before_script:
-    - source /opt/ros/$ROS_DISTRO/setup.bash
-
-script:
-    - catkin build
+#script:
 # Real tests: crash because of Gazebo bugs
 #    - roslaunch pr2_pbd_interaction simulated_robot.launch gui:=false
 # Debug: trying to just run gazebo's table object launch (Gazebo bugs)

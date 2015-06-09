@@ -15,8 +15,15 @@ cache: apt
 # Before anything, see if we can get the mongoDB troubles out of the way.
 # Note that this is a Travis-CI specific problem; this is not needed in
 # general.
-before_install:
+before_install: # Use this to prepare the system to install prerequisites or dependencies
+  # Define some config vars
     - sudo apt-get --purge remove mongodb-10gen postgresql-9.2 postgresql-contrib-9.2 postgresql-9.3 postgresql-contrib-9.3
+  - export ROS_DISTRO=hydro
+  - export CI_SOURCE_PATH=$(pwd)
+  - export REPOSITORY_NAME=${PWD##*/}
+# Settings to make installing script more general.
+  - export ROS_CI_DESKTOP=`lsb_release -cs`  # e.g. 'precise'
+  - export ROS_CI_PREFIX=ros-${ROS_DISTRO}-  # e.g. 'ros-groovy-'
 
 notifications:
   email: false
@@ -24,41 +31,34 @@ notifications:
 # Commands to install dependencies
 # --------------------------------
 install:
-# Update package list and install new versions.
-    - sudo apt-get update
-    - sudo apt-get -y upgrade
-# First, move code to correct place. Also Travis-CI specific.
-    - mkdir -p ~/catkin_ws/src
-    - cd ..; mv rapid_robot ~/catkin_ws/src
-# Settings to make installing script more general.
-    - export ROS_CI_DESKTOP=`lsb_release -cs`  # e.g. 'precise'
-    - export ROS_CI_VERSION=hydro  # e.g. 'groovy'
-    - export ROS_CI_PREFIX=ros-${ROS_CI_VERSION}-  # e.g. 'ros-groovy-'
-# Exports for ROS
-    - export ROS_HOSTNAME=localhost
-    - export ROS_MASTER_URI=http://localhost:11311
-    - export ROBOT=sim
-# Add ROS repositories, setup keys, update, install, init basics
-    - echo "deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main" | sudo tee /etc/apt/sources.list.d/ros-latest.list
-    - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
-    - yes | sudo apt-get -y update
-    - yes | sudo apt-get -y install ${ROS_CI_PREFIX}desktop-full
-    - sudo rosdep init
-    - rosdep update
-# Environment setup
-    - source /opt/ros/${ROS_CI_VERSION}/setup.bash
-# Add required debian and python packages with apt-get and pip.
-    - pip install -U catkin_tools
-    - rosdep install --from-paths src --ignore-src --rosdistro=${ROS_CI_VERSION} -y
-    - cd ~/catkin_ws/
-    - catkin init
-    - source ~/catkin_ws/devel/setup.bash
-    - catkin build
-    #- curl https://install.meteor.com/ | sh
+  # Install ROS
+  - echo "deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main" | sudo tee /etc/apt/sources.list.d/ros-latest.list
+  - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin ros-$ROS_DISTRO-ros
+  # Setup rosdep
+  - sudo rosdep init
+  - rosdep update
+  # Install catkin_tools
+  - pip install -U catkin_tools
+  # Create workspace.
+  - mkdir -p ~/catkin_ws/src
+  - cd ..; mv rapid_robot ~/catkin_ws/src
+  # Install dependencies
+  - rosdep install --from-paths src --ignore-src --rosdistro=${ROS_DISTRO} -y
+  # Build
+  - cd ~/catkin_ws/
+  - catkin init
+  - catkin build
+  #- curl https://install.meteor.com/ | sh
 
 # Command to run tests
 # --------------------
+before_script:
+  - source /opt/ros/$ROS_DISTRO/setup.bash
+
 script:
+  - catkin build
 # Real tests: crash because of Gazebo bugs
 #    - roslaunch pr2_pbd_interaction simulated_robot.launch gui:=false
 # Debug: trying to just run gazebo's table object launch (Gazebo bugs)

@@ -45,9 +45,9 @@ install:
     - mkdir -p ~/catkin_ws/src
     - cd ..; mv rapid_robot ~/catkin_ws/src
     # Install dependencies
+    - cd ~/catkin_ws/
     - rosdep install --from-paths src --ignore-src --rosdistro=${ROS_DISTRO} -y
     # Build
-    - cd ~/catkin_ws/
     - catkin init
     - catkin build
     #- curl https://install.meteor.com/ | sh

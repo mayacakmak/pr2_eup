@@ -1,6 +1,8 @@
 # rapid_robot
 High-level APIs for controlling mobile ROS robots.
 
+[![Build Status](https://travis-ci.org/jstnhuang/rapid_robot.svg?branch=master)](https://travis-ci.org/jstnhuang/rapid_robot)
+
 ## Package overview
 - `rapid_robot` contains the library itself.
 - `rapid_samples` contains examples of how the interface can be used.

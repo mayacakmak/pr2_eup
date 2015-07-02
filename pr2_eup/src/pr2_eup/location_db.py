@@ -1,4 +1,4 @@
-import db
+from db import Db
 
 class LocationDb(Db):
     def __init__(self, db_filename, tf_listener):

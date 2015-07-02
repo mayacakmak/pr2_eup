@@ -1,5 +1,5 @@
-from rapid_robot.msg import InterfaceParams
-from rapid_robot.msg import InterfaceSubmission
+from pr2_eup.msg import InterfaceParams
+from pr2_eup.msg import InterfaceSubmission
 import json
 import random
 import rospy
@@ -56,7 +56,7 @@ class Interface(object):
         while response_prompt_id != prompt_id:
             start_time = rospy.Time().now()
             submission = rospy.wait_for_message(
-                'rapid_robot/interface/interface_submission',
+                'pr2_eup/interface/interface_submission',
                 InterfaceSubmission, timeout_remaining)
 
             # If a timeout is set, then possibly break out of the loop.

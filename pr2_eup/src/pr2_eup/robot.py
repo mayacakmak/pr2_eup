@@ -1,10 +1,8 @@
 from interface import Interface
 from location_db import LocationDb
-from move_base_msgs.msg import MoveBaseAction
 from navigation import Navigation
-from rapid_robot.msg import InterfaceParams
-from rapid_robot.msg import InterfaceSubmission
-import actionlib
+from pr2_eup.msg import InterfaceParams
+from pr2_eup.msg import InterfaceSubmission
 import rospy
 import tf
 
@@ -16,12 +14,11 @@ class RobotFactory(object):
         Returns: Robot. A robot object.
         """
         # Navigation
-        move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
         tf_listener = tf.TransformListener()
-        navigation = Navigation('base_footprint', 'map', tf_listener, move_base_client)
+        navigation = Navigation('base_footprint', 'map', tf_listener)
 
         # Interface
-        interface_publisher = rospy.Publisher('rapid_robot/interface/interface_params',
+        interface_publisher = rospy.Publisher('pr2_eup/interface/interface_params',
                              InterfaceParams)
         interface = Interface(interface_publisher)
 

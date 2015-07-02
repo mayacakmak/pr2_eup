@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import rospy
-import rapid_robot
+import pr2_eup
 
 def main(robot, location_db):
     while True:
@@ -32,7 +32,7 @@ def do_delivery(robot, location_db):
 
 if __name__ == '__main__':
     rospy.init_node('delivery')
-    robot = rapid_robot.RobotFactory().build()
+    robot = pr2_eup.RobotFactory().build()
     parser = argparse.ArgumentParser()
     parser.add_argument('filename',
                         metavar='FILE',

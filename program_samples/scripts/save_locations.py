@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from geometry_msgs.msg import PoseStamped
 import argparse
-import rapid_robot
+import pr2_eup
 import rospy
 import tf
 
@@ -55,7 +55,7 @@ def go_to_location(robot, pose_stamped):
 
 if __name__ == '__main__':
     rospy.init_node('save_locations')
-    robot = rapid_robot.RobotFactory().build()
+    robot = pr2_eup.RobotFactory().build()
 
     parser = argparse.ArgumentParser()                                                                                              
     parser.add_argument('filename',

@@ -1,10 +1,12 @@
 from interface import Interface
 from location_db import LocationDb
 from navigation import Navigation
+from event_monitor import EventMonitor
 from pr2_eup.msg import InterfaceParams
 from pr2_eup.msg import InterfaceSubmission
 import rospy
 import tf
+import time
 
 
 class RobotFactory(object):
@@ -18,9 +20,10 @@ class RobotFactory(object):
         navigation = Navigation('base_footprint', 'map', tf_listener)
 
         # Interface
-        interface_publisher = rospy.Publisher('pr2_eup/interface/interface_params',
-                             InterfaceParams)
-        interface = Interface(interface_publisher)
+        interface = Interface()
+
+        # Speech
+
 
         # Location DB
 
@@ -45,6 +48,23 @@ class Robot(object):
         Returns: LocationDb.
         """
         return LocationDb(db_filename, self._tf_listener)
+
+    @staticmethod
+    def start(action_function, kwargs={}):
+        monitor = EventMonitor(
+            target=action_function,
+            kwargs=kwargs)
+        monitor.start()
+        return monitor
+
+    @staticmethod
+    def do(action_function, kwargs={}):
+        event_monitor = Robot.start(action_function, kwargs)
+        #while event_monitor.is_alive():
+        #    time.sleep(0.05)
+        #return event_monitor.get_result()
+        return event_monitor.join()
+
 
     @staticmethod
     def wait_for_event(function, timeout):

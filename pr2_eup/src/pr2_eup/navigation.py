@@ -7,53 +7,60 @@ import actionlib
 from move_base_msgs.msg import MoveBaseAction
 import signal
 import time
-
+from threading import Lock
+from event_monitor import EventMonitor
 
 class Navigation(object):
     def __init__(self, base_frame, world_frame, tf_listener):
 
         self._move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-        self._base_controller_publisher = rospy.Publisher('/base_controller/command', Twist)
+        self._base_controller_publisher = rospy.Publisher('/base_controller/command', Twist, queue_size=10)
 
         self._base_frame = base_frame
         self._world_frame = world_frame
         self._tf_listener = tf_listener
+        self._base_lock = Lock()
 
     def move_forward(self, duration):
-        self.move(0.75, 0, 0, duration)
+        return self.move(0.75, 0, 0, duration)
 
     def move_backward(self, duration):
-        self.move(-0.75, 0, 0, duration)
+        return self.move(-0.75, 0, 0, duration)
 
     def turn_left(self, duration):
-        self.move(0, 0, 0.75, duration)
+        return self.move(0, 0, 0.75, duration)
 
     def turn_right(self, duration):
-        self.move(0, 0, -0.75, duration)
+        return self.move(0, 0, -0.75, duration)
 
-    def move(self, x, y, theta, duration):
+    def _move_forever(self, x, y, theta):
         twist_msg = Twist()
         twist_msg.linear = Vector3(x, y, 0.0)
         twist_msg.angular = Vector3(0.0, 0.0, theta)
-    
-        class Timeout(Exception):
-            pass
-    
-        def handler(signum, frame):
-            raise Timeout()
-    
-        signal.signal(signal.SIGALRM, handler)
-        signal.alarm(duration)
-        try:
-            while True:
-                self._base_controller_publisher.publish(twist_msg)
-                time.sleep(0.05)
+        while True:
+            self._base_controller_publisher.publish(twist_msg)
+            time.sleep(0.05)
 
-        except Timeout as exc:
-            rospy.loginfo('move timed out')
-            pass
-        finally:
-            signal.alarm(0)
+    def _move_once(self, x, y, theta):
+        twist_msg = Twist()
+        twist_msg.linear = Vector3(x, y, 0.0)
+        twist_msg.angular = Vector3(0.0, 0.0, theta)
+        self._base_controller_publisher.publish(twist_msg)
+
+    def move(self, x, y, theta, duration):
+
+        if self._base_lock.locked():
+            rospy.logwarn('Received base movement request while busy, will have to wait.')
+        self._base_lock.acquire()
+        start_time = time.time()
+        current_time = time.time()
+        while (current_time-start_time < float(duration)):
+            self._move_once(x, y, theta)
+            time.sleep(0.01)
+            current_time = time.time()
+        self._move_once(0, 0, 0)
+        self._base_lock.release()
+        return None
 
     def go_to(self, pose_stamped):
         """Goes to a location in the world.

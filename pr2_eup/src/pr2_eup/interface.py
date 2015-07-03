@@ -6,8 +6,8 @@ import rospy
 
 
 class Interface(object):
-    def __init__(self, interface_publisher):
-        self._interface_publisher = interface_publisher
+    def __init__(self):
+        self._interface_publisher = rospy.Publisher('pr2_eup/interface/interface_params', InterfaceParams)
 
     def _publish_params(self, msg):
         rate = rospy.Rate(5)

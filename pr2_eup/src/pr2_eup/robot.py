@@ -22,8 +22,14 @@ class RobotFactory(object):
         # Interface
         interface = Interface()
 
-        # Speech
+        # Speech and sounds
+        voice = voice()
 
+        # Head
+        head = Head()
+
+        # Arms
+        arms = Arms()
 
         robot = Robot(interface, navigation, tf_listener)
         return robot

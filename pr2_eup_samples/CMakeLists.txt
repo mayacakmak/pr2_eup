@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(program_samples)
+project(pr2_eup_samples)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -80,7 +80,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES program_samples
+#  LIBRARIES pr2_eup_samples
 #  CATKIN_DEPENDS roscpp rospy
 #  DEPENDS system_lib
 )
@@ -97,19 +97,19 @@ include_directories(
 )
 
 ## Declare a cpp library
-# add_library(program_samples
-#   src/${PROJECT_NAME}/program_samples.cpp
+# add_library(pr2_eup_samples
+#   src/${PROJECT_NAME}/pr2_eup_samples.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(program_samples_node src/program_samples_node.cpp)
+# add_executable(pr2_eup_samples_node src/pr2_eup_samples_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(program_samples_node program_samples_generate_messages_cpp)
+# add_dependencies(pr2_eup_samples_node pr2_eup_samples_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(program_samples_node
+# target_link_libraries(pr2_eup_samples_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -128,7 +128,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS program_samples program_samples_node
+# install(TARGETS pr2_eup_samples pr2_eup_samples_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -153,7 +153,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_program_samples.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_pr2_eup_samples.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

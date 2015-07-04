@@ -32,9 +32,12 @@ class RobotFactory(object):
         voice = Voice(sound_db)
 
         # Head
+        # TODO: Head action database?
         head = Head()
 
         # Arms
+        # TODO: Arm action database?
+        # TODO: Arm action execution
         #arms = Arms()
 
         robot = Robot(interface, navigation, voice, head)

@@ -117,12 +117,14 @@ class Interface(object):
 
                     if displayed_time_remaining != int(time_remaining):
                         displayed_time_remaining = int(time_remaining)
-                        displayed_message = message + '\n' + str(displayed_time_remaining)
+                        displayed_message = (message + '\n Time remaing:' +
+                            str(displayed_time_remaining) + ' seconds')
                         msg.values = [displayed_message]
                         self._publish_params(msg)
                     
                     time.sleep(0.05)
                     time_remaining = duration - (rospy.Time().now() - start_time).to_sec()
+                self.display_default()
             else:
                 rospy.logerr('Cannot count down without a specified duration.')
         else:

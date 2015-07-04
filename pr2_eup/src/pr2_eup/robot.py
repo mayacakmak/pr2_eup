@@ -3,12 +3,14 @@ from location_db import LocationDb
 from sound_db import SoundDb
 from navigation import Navigation
 from voice import Voice
+from head import Head
 from event_monitor import EventMonitor
 from pr2_eup.msg import InterfaceParams
 from pr2_eup.msg import InterfaceSubmission
 import rospy
 import tf
 import time
+from threading import Thread
 
 class RobotFactory(object):
     def build(self):
@@ -17,13 +19,13 @@ class RobotFactory(object):
         Returns: Robot. A robot object.
         """
 
-        # Navigation
-        tf_listener = tf.TransformListener()
-        location_db = LocationDb('dummy', _tf_listener)
-        navigation = Navigation(location_db, tf_listener)
-
         # Interface
         interface = Interface()
+
+        # Navigation
+        tf_listener = tf.TransformListener()
+        location_db = LocationDb('dummy', tf_listener)
+        navigation = Navigation(location_db, tf_listener)
 
         # Speech and sounds
         sound_db = SoundDb('dummy')
@@ -33,15 +35,17 @@ class RobotFactory(object):
         head = Head()
 
         # Arms
-        arms = Arms()
+        #arms = Arms()
 
-        robot = Robot(interface, navigation, tf_listener)
+        robot = Robot(interface, navigation, voice, head)
         return robot
 
 class Robot(object):
-    def __init__(self, interface, navigation):
+    def __init__(self, interface, navigation, voice, head):
         self.interface = interface
         self.navigation = navigation
+        self.voice = voice
+        self.head = head
 
     @staticmethod
     def start(action_function, **kwargs):
@@ -97,3 +101,15 @@ class Robot(object):
             signal.alarm(0)
     
         return event_complete, result
+
+    def start(self):
+        update_thread = Thread(target=self._run)
+        update_thread.start()
+
+    def _run(self):
+        while not rospy.is_shutdown():
+            self._update()
+            time.sleep(0.05)
+
+    def _update(self):
+        self.head.update()

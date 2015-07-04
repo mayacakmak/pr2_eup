@@ -2,7 +2,7 @@ from db import Db
 
 class LocationDb(Db):
     def __init__(self, db_filename, tf_listener):
-        Db.__init__(db_filename)
+        Db.__init__(self, db_filename)
         self._tf_listener = tf_listener
 
     def set(self, name, pose_stamped):

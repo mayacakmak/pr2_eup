@@ -14,19 +14,20 @@ def do_delivery(robot):
 
     choice = robot.interface.ask_choice('Press Start when you are ready:', ['Start'])
 
-    Robot.do(robot.navigation.move_backward, {'duration':'2'})
-    robot.interface.say_message('Moved backward..', timeout=1)
+    Robot.start(robot.interface.say_message('Moving backward..', timeout=2))
+    Robot.do(robot.navigation.move_backward, {'duration':'3'})
+    Robot.do(robot.interface.say_message('Done Moved backward..', timeout=1))
 
-    choice = robot.interface.ask_choice('Press Start when you are ready:', ['continue'])
+    choice = Robot.do(robot.interface.ask_choice('Press Start when you are ready:', ['continue']))
 
-    Robot.start(robot.navigation.move_forward, {'duration':'2'})
+    navigation_monitor = Robot.start(robot.navigation.move_forward, {'duration':'2'})
+    Robot.wait(navigation_monitor)
     Robot.do(robot.navigation.turn_left, {'duration':'2'})
     robot.interface.say_message('Moved forward..', timeout=1)
     #robot.navigation.move_forward(2)
 
     #robot.navigation.turn_right(2)
     #robot.interface.say_message('Turned right..', timeout=1)
-
 
     #robot.navigation.turn_left(2)
     #robot.interface.say_message('Turned left..', timeout=1)

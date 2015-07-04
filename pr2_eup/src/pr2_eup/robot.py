@@ -58,13 +58,13 @@ class Robot(object):
         return monitor
 
     @staticmethod
-    def do(action_function, kwargs={}):
-        event_monitor = Robot.start(action_function, kwargs)
-        #while event_monitor.is_alive():
-        #    time.sleep(0.05)
-        #return event_monitor.get_result()
+    def wait(event_monitor):
         return event_monitor.join()
 
+    @staticmethod
+    def do(action_function, kwargs={}):
+        event_monitor = Robot.start(action_function, kwargs)
+        return Robot.wait(event_monitor)
 
     @staticmethod
     def wait_for_event(function, timeout):

@@ -1,17 +1,15 @@
-# rapid_robot
-High-level APIs for controlling mobile ROS robots.
-
-[![Build Status](https://travis-ci.org/jstnhuang/rapid_robot.svg?branch=master)](https://travis-ci.org/jstnhuang/rapid_robot)
+# pr2_eup
+High-level APIs for end-user programming of the PR2 robot. 
+Based on Justin Huang's [rapid_robot](https://github.com/jstnhuang/rapid_robot).
 
 ## Package overview
-- `rapid_robot` contains the library itself.
-- `rapid_samples` contains examples of how the interface can be used.
-- `rapid_turtlebot` contains supporting files for running a delivery demo on a Turtlebot.
+- `pr2_eup` contains the library itself.
+- `pr2_eup_samples` contains examples of how the interface can be used.
 
 ## Installation
 You need to install [meteor](https://www.meteor.com/).
 
-## Running the delivery demo
+## Running the test demo
 To run the delivery demo, you need:
 
 1. A map of the environment ([see tutorial](http://wiki.ros.org/turtlebot_navigation/Tutorials/Build%20a%20map%20with%20SLAM))
@@ -27,21 +25,17 @@ python save_locations.py ~/data/locations.db
 
 Type `set Home` to save the current position as "Home". Drive the robot around using teleop, and save as many locations as you like.
 
-### Delivery demo
-On the Turtlebot, run:
+### Test demo
+On the PR2, run:
 ```
-roslaunch turtlebot_bringup minimal.launch
-roslaunch rapid_turtlebot turtlebot.launch map_file:=/your/map/file.yaml
+robot start
+roslaunch todo_todo todo.launch map_file:=/your/map/file.yaml
 ```
 
-On the Turtlebot, go to `rapid_robot/web/rapid_web_interface` and type `meteor`. Visit `localhost:3000` in a web browser and full-screen it.
+On the PR2, go to `pr2_eup/web/rapid_web_interface` and type `meteor`. Visit `localhost:3000` in a web browser and full-screen it.
 
 On your workstation, run:
 ```
-roslaunch rapid_turtlebot visualize_turtlebot.launch
-python delivery.py ~/data/locations.db
+rosrun pr2_eup_samples test_all.py
 ```
 
-## Generated documentation
-- [Code API](http://jstnhuang.github.io/rapid_robot/namespaces.html)
-- [Message documentation](http://jstnhuang.github.io/rapid_robot/index-msg.html) (not part of the API)

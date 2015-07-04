@@ -3,9 +3,8 @@ import shelve
 
 
 class Db(object):
-    def __init__(self, db_filename, tf_listener):
+    def __init__(self, db_filename):
         self._db = shelve.open(db_filename)
-        self._tf_listener = tf_listener
 
     def get_all(self):
         return self._db.items()

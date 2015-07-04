@@ -4,7 +4,7 @@ import rospy
 import pr2_eup
 from pr2_eup.robot import Robot
 
-def test_everything(robot):
+def test_all(robot):
     
     Robot.do(robot.interface.ask_choice,
         message='Press Start when you are ready:',
@@ -22,6 +22,8 @@ def test_everything(robot):
         y=0.0,
         theta=0.75,
         duration=4)
+    Robot.do(robot.voice.say,
+        text='Done moving.')
 
 
 
@@ -30,4 +32,4 @@ if __name__ == '__main__':
     rospy.init_node('test_pr2_eup')
     robot = pr2_eup.RobotFactory().build()
     while not rospy.is_shutdown():
-        test_everything(robot)
+        test_all(robot)

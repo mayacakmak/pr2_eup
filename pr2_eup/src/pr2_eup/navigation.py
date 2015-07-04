@@ -12,15 +12,16 @@ from event_monitor import EventMonitor
 
 
 class Navigation(object):
-    def __init__(self, base_frame, world_frame, tf_listener):
+    def __init__(self, location_db, tf_listener):
 
         self._move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
         self._base_controller_publisher = rospy.Publisher('/base_controller/command', Twist, queue_size=10)
 
-        self._base_frame = base_frame
-        self._world_frame = world_frame
+        self._base_frame = 'base_footprint'
+        self._world_frame = 'map'
         self._tf_listener = tf_listener
         self._base_lock = Lock()
+        self._location_db = location_db
 
     def move_forward(self, duration):
         return self.move(0.75, 0, 0, duration)
@@ -61,6 +62,9 @@ class Navigation(object):
         self._move_once(0, 0, 0)
         self._base_lock.release()
         return None
+
+    def go_to_location(self, location_name):
+        self.go_to(location_db.get(location_name))
 
     def go_to(self, pose_stamped):
         """Goes to a location in the world.

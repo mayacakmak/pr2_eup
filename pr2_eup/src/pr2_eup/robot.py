@@ -1,6 +1,8 @@
 from interface import Interface
 from location_db import LocationDb
+from sound_db import SoundDb
 from navigation import Navigation
+from voice import Voice
 from event_monitor import EventMonitor
 from pr2_eup.msg import InterfaceParams
 from pr2_eup.msg import InterfaceSubmission
@@ -17,13 +19,15 @@ class RobotFactory(object):
 
         # Navigation
         tf_listener = tf.TransformListener()
-        navigation = Navigation('base_footprint', 'map', tf_listener)
+        location_db = LocationDb('dummy', _tf_listener)
+        navigation = Navigation(location_db, tf_listener)
 
         # Interface
         interface = Interface()
 
         # Speech and sounds
-        voice = voice()
+        sound_db = SoundDb('dummy')
+        voice = Voice(sound_db)
 
         # Head
         head = Head()
@@ -35,23 +39,9 @@ class RobotFactory(object):
         return robot
 
 class Robot(object):
-    def __init__(self, interface, navigation, tf_listener):
+    def __init__(self, interface, navigation):
         self.interface = interface
         self.navigation = navigation
-        self._tf_listener = tf_listener
-
-    def location_db(self, db_filename):
-        """Returns a location database.
-
-        The location DB file can be any Python shelve file that maps strings
-        to geometry_msgs/PoseStamped messages.
-
-        Args:
-          db_filename: string. The location on the filesystem of DB file.
-
-        Returns: LocationDb.
-        """
-        return LocationDb(db_filename, self._tf_listener)
 
     @staticmethod
     def start(action_function, **kwargs):

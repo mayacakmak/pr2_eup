@@ -8,13 +8,13 @@ import rospy
 import tf
 import time
 
-
 class RobotFactory(object):
     def build(self):
         """Builds a robot object.
 
         Returns: Robot. A robot object.
         """
+
         # Navigation
         tf_listener = tf.TransformListener()
         navigation = Navigation('base_footprint', 'map', tf_listener)
@@ -24,8 +24,6 @@ class RobotFactory(object):
 
         # Speech
 
-
-        # Location DB
 
         robot = Robot(interface, navigation, tf_listener)
         return robot
@@ -50,7 +48,7 @@ class Robot(object):
         return LocationDb(db_filename, self._tf_listener)
 
     @staticmethod
-    def start(action_function, kwargs={}):
+    def start(action_function, **kwargs):
         monitor = EventMonitor(
             target=action_function,
             kwargs=kwargs)
@@ -58,13 +56,16 @@ class Robot(object):
         return monitor
 
     @staticmethod
-    def wait(event_monitor):
-        return event_monitor.join()
+    def wait(action_monitor):
+        return action_monitor.join()
 
     @staticmethod
-    def do(action_function, kwargs={}):
-        event_monitor = Robot.start(action_function, kwargs)
-        return Robot.wait(event_monitor)
+    def do(action_function, **kwargs):
+        monitor = EventMonitor(
+            target=action_function,
+            kwargs=kwargs)
+        monitor.start()
+        return Robot.wait(monitor)
 
     @staticmethod
     def wait_for_event(function, timeout):

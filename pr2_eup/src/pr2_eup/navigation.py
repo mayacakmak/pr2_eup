@@ -10,6 +10,7 @@ import time
 from threading import Lock
 from event_monitor import EventMonitor
 
+
 class Navigation(object):
     def __init__(self, base_frame, world_frame, tf_listener):
 
@@ -48,7 +49,6 @@ class Navigation(object):
         self._base_controller_publisher.publish(twist_msg)
 
     def move(self, x, y, theta, duration):
-
         if self._base_lock.locked():
             rospy.logwarn('Received base movement request while busy, will have to wait.')
         self._base_lock.acquire()

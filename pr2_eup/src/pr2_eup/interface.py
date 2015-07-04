@@ -3,6 +3,7 @@ from pr2_eup.msg import InterfaceSubmission
 import json
 import random
 import rospy
+import time
 
 
 class Interface(object):
@@ -22,7 +23,7 @@ class Interface(object):
         msg.interface_type = 'default'
         self._publish_params(msg)
 
-    def ask_choice(self, message, choices, timeout=None):
+    def ask_choice(self, message, choices, timeout=None, has_countdown=False):
         """Asks the user a multiple choice question.
 
         Displays a button for each choice in choices. This method blocks until
@@ -62,7 +63,7 @@ class Interface(object):
             # If a timeout is set, then possibly break out of the loop.
             wait_duration = (rospy.Time().now() - start_time).to_sec()
             if timeout is not None:
-                timeout_remaining -= wait_duration
+                timeout_remaining = timeout - wait_duration
                 if timeout_remaining <= 0:
                     break
 
@@ -90,23 +91,46 @@ class Interface(object):
         self.display_default()
         return choice
 
-    def say_message(self, message, timeout=None):
+    def display_message(self, message, duration=None, has_countdown=False):
         """Displays the given message on the screen.
 
-        If no timeout is given, then the message is shown and this method
+        If no duration is given, then the message is shown and this method
         returns immediately. Otherwise, this method blocks for the given
-        timeout while the message is being shown.
+        duration while the message is being shown.
 
         Args:
           message: string. The message to show.
-          timeout: float. The time, in seconds, to show the message, or None to 
+          duration: float. The time, in seconds, to show the message, or None to 
             show the message indefinitely.
         """
         msg = InterfaceParams()
         msg.interface_type = 'display_message'
         msg.keys = ['message']
-        msg.values = [message]
-        self._publish_params(msg)
-        if timeout is not None:
-            rospy.sleep(timeout)
-            self.display_default()
+
+        if has_countdown:
+            if duration is not None:
+                start_time = rospy.Time().now()
+                time_remaining = duration
+                displayed_time_remaining = None
+
+                while (time_remaining > 0):
+
+                    if displayed_time_remaining != int(time_remaining):
+                        displayed_time_remaining = int(time_remaining)
+                        displayed_message = message + '\n' + str(displayed_time_remaining)
+                        msg.values = [displayed_message]
+                        self._publish_params(msg)
+                    
+                    time.sleep(0.05)
+                    time_remaining = duration - (rospy.Time().now() - start_time).to_sec()
+            else:
+                rospy.logerr('Cannot count down without a specified duration.')
+        else:
+            msg.values = [message]
+            self._publish_params(msg)
+
+            if duration is not None:
+                    rospy.sleep(duration)
+                    self.display_default()
+
+

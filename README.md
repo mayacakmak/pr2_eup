@@ -64,7 +64,7 @@ meteor
 
 Terminal 4: Run your script
 ```
-rosrun pr2_eup_samples test_sample.py
+rosrun pr2_eup_samples example.py
 ```
 
 Web interface:

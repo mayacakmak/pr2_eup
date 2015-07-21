@@ -5,7 +5,10 @@ from sound_play.libsoundplay import SoundClient
 class Voice:
     def __init__(self, sound_db):
         self._sound_client = SoundClient()
+        rospy.loginfo('Will wait for a second for sound_pay node.')
+        rospy.sleep(1)
         self._sound_db = sound_db
+        self.play_sound('sound10')
 
     def play_sound(self, sound_name):
         '''Plays the requested sound.

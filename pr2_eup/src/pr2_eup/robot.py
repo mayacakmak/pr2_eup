@@ -89,6 +89,10 @@ class Robot(object):
         return action_monitor.join()
 
     @staticmethod
+    def sleep(duration):
+        rospy.sleep(duration)
+
+    @staticmethod
     def do(action_function, **kwargs):
         monitor = EventMonitor(
             target=action_function,
@@ -135,5 +139,8 @@ class Robot(object):
     def say(self, **kwargs):
         Robot.do(self.voice.say,
             **kwargs)
-    def wait_for_speech(self):
-        return Robot.wait(self.speech_monitor)            
+    def wait_for_speech(self, commands=None):
+        self.speech_monitor.set_command_list(commands)
+        received_command = Robot.wait(self.speech_monitor)
+        self.speech_monitor.set_command_list(None)
+        return received_command

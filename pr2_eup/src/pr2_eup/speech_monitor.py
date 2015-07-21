@@ -12,10 +12,21 @@ class SpeechMonitor():
         self._speech_lock = Lock()
         rospy.Subscriber('recognizer/output', 
             String, self.receive_sphinx_result)
+        self._command_list = None
+
+    def set_command_list(self, commands):
+        self._speech_lock.acquire()
+        self._command_list = commands
+        self._speech_lock.release()
 
     def receive_sphinx_result(self, data):
         self._speech_lock.acquire()
-        if self._speech_db.get(data.data) is not None:
+        is_in_database = self._speech_db.get(data.data) is not None
+        is_in_command_list = (self._command_list is None or
+            data.data in self._command_list)
+        rospy.loginfo('Command is in database?:' + str(is_in_database))
+        rospy.loginfo('Command is in requested list?:' + str(is_in_command_list))
+        if is_in_database and is_in_command_list:
             self._previous_command = self._received_command
             self._received_command = data.data
             rospy.loginfo('Received command:' + self._received_command)

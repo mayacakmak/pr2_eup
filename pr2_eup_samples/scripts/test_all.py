@@ -4,9 +4,11 @@ import rospy
 import pr2_eup
 from pr2_eup.robot import Robot
 
+TURTLEBOT = 'Chester'
+PR2 = 'Rosie'
+
 def test_all(robot):
     
-
     Robot.do(robot.interface.ask_choice,
         message='Press Start when you are ready:',
         choices=['Start'])
@@ -28,15 +30,14 @@ def test_all(robot):
     choice = Robot.do(robot.interface.ask_choice,
         message='What should the head do?',
         choices=['NOD', 'SHAKE'])
-    Robot.do(robot.head.do_gaze_action,
-        command=choice)
-
+    #Robot.do(robot.head.do_gaze_action,
+    #    command=choice)
 
 
 if __name__ == '__main__':
 
     rospy.init_node('test_pr2_eup')
-    robot = pr2_eup.RobotFactory().build()
-    robot.start()
+    robot = pr2_eup.RobotFactory().build(TURTLEBOT)
+    robot.start_robot()
     while not rospy.is_shutdown():
         test_all(robot)

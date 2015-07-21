@@ -12,15 +12,19 @@ import tf
 import time
 from threading import Thread
 
+TURTLEBOT = 'Chester'
+PR2 = 'Rosie'
+
 class RobotFactory(object):
-    def build(self):
+
+    def build(self, robot_name):
         """Builds a robot object.
 
         Returns: Robot. A robot object.
         """
 
         # Interface
-        interface = Interface()
+        interface = Interface(robot_name)
 
         # Navigation
         tf_listener = tf.TransformListener()
@@ -33,22 +37,29 @@ class RobotFactory(object):
 
         # Head
         # TODO: Head action database?
-        head = Head()
+        if robot_name == PR2:
+            head = Head()
+        else:
+            head = None
 
         # Arms
         # TODO: Arm action database?
         # TODO: Arm action execution
         #arms = Arms()
 
-        robot = Robot(interface, navigation, voice, head)
+        robot = Robot(robot_name, interface, navigation, voice, head)
         return robot
 
 class Robot(object):
-    def __init__(self, interface, navigation, voice, head):
+    def __init__(self, robot_name, interface, navigation, voice, head):
         self.interface = interface
         self.navigation = navigation
         self.voice = voice
         self.head = head
+
+    def start_robot(self):
+        update_thread = Thread(target=self._run)
+        update_thread.start()
 
     @staticmethod
     def start(action_function, **kwargs):
@@ -70,49 +81,12 @@ class Robot(object):
         monitor.start()
         return Robot.wait(monitor)
 
-    @staticmethod
-    def wait_for_event(function, timeout):
-        """Calls the given function, but bounds the time by the given timeout.
-    
-        The function will be called with no arguments. If it returns before the
-        timeout, then this function will return event_complete=True and the result
-        of the function. Otherwise, this function will return (False, None).
-
-        Args:
-          function: function. A no-argument function to call.
-          timeout: float. The time, in seconds, to wait for the function to return.
-        """
-        import signal
-    
-        class TimeoutError(Exception):
-            pass
-    
-        def handler(signum, frame):
-            raise TimeoutError()
-    
-        signal.signal(signal.SIGALRM, handler)
-        signal.alarm(timeout)
-        event_complete = False
-        result = None
-        try:
-            result = function()
-            event_complete = True
-        except TimeoutError as exc:
-            event_complete = False
-            result = None
-        finally:
-            signal.alarm(0)
-    
-        return event_complete, result
-
-    def start(self):
-        update_thread = Thread(target=self._run)
-        update_thread.start()
-
     def _run(self):
         while not rospy.is_shutdown():
             self._update()
             time.sleep(0.05)
 
     def _update(self):
-        self.head.update()
+
+        if self.head is not None:
+            self.head.update()

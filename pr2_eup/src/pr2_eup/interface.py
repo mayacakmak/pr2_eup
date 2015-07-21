@@ -7,7 +7,8 @@ import time
 
 
 class Interface(object):
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self._interface_publisher = rospy.Publisher('pr2_eup/interface/interface_params', InterfaceParams)
 
     def _publish_params(self, msg):
@@ -20,6 +21,7 @@ class Interface(object):
         """Displays the default screen.
         """
         msg = InterfaceParams()
+        msg.interface_name = self.name
         msg.interface_type = 'default'
         self._publish_params(msg)
 
@@ -41,6 +43,7 @@ class Interface(object):
         """
         msg = InterfaceParams()
         msg.interface_type = 'ask_choice'
+        msg.interface_name = self.name
         prompt_id = str(random.randint(0, 1000000))
         msg.keys = ['message', 'choices', 'prompt_id']
         msg.values = [message, json.dumps(choices), prompt_id]
@@ -105,6 +108,7 @@ class Interface(object):
         """
         msg = InterfaceParams()
         msg.interface_type = 'display_message'
+        msg.interface_name = self.name
         msg.keys = ['message']
 
         if has_countdown:

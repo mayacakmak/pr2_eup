@@ -30,7 +30,9 @@ if (Meteor.isClient) {
   Template.body.onCreated(function() {
     var that = this;
     Session.setDefault('interface_type', 'default');
-    Session.setDefault('interface_params', {});
+    var default_params = {}
+    default_params['interface_name'] = 'Robot'
+    Session.setDefault('interface_params', default_params);
 
     this.view_listener = new ROSLIB.Topic({
       ros: ros,
@@ -41,6 +43,7 @@ if (Meteor.isClient) {
     this.view_listener.subscribe(function(message) {
       Session.set('interface_type', message.interface_type);
       var params = {}
+      params['interface_name'] = message.interface_name
       for (var i=0; i<message.keys.length; i+=1) {
         var key = message.keys[i];
         var value = message.values[i];

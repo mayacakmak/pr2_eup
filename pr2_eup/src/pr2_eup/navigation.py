@@ -12,6 +12,7 @@ from event_monitor import EventMonitor
 
 
 class Navigation(object):
+    
     def __init__(self, location_db, tf_listener):
 
         self._move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)

@@ -57,7 +57,7 @@ def main_loop(robot):
 #############################################
 
 if __name__ == '__main__':
-    rospy.init_node('pr2_eup_example1')
+    rospy.init_node('pr2_eup_delivery')
     robot = pr2_eup.RobotFactory().build(RobotType.TURTLEBOT)
     robot.start_robot()
     while not rospy.is_shutdown():

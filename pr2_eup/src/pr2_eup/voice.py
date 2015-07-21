@@ -1,11 +1,11 @@
 import rospy
-from sound_play.msg import SoundRequest
 from sound_play.libsoundplay import SoundClient
 
 
 class Voice:
     def __init__(self, sound_db):
         self._sound_client = SoundClient()
+        self._sound_db = sound_db
 
     def play_sound(self, sound_name):
         '''Plays the requested sound.
@@ -13,8 +13,8 @@ class Voice:
         Args:
             requested_sound (str): Unique name of the sound in the sound database.
         '''
-        sound_filename = sound_db.get(sound_name)
-        Response._sound_client.playWave(sound_filename)
+        sound_filename = self._sound_db.get(sound_name)
+        self._sound_client.playWave(sound_filename)
 
         # TODO: Make sure this returns when it is done playing the sound.
 

@@ -30,7 +30,9 @@ class RobotFactory(object):
         navigation = Navigation(robot_type, location_db, tf_listener)
 
         # Speech and sounds
-        sound_db = SoundDb('dummy')
+        sound_db = SoundDb('sound_db')
+        for i in range(10):
+            sound_db.set('sound' + str(i+1))
         voice = Voice(sound_db)
 
         # Head

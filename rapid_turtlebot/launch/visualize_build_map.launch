@@ -1,3 +1,0 @@
-<launch>
-  <node name="$(anon visualize_build_map)" pkg="rviz" type="rviz" args="-d $(find rapid_turtlebot)/config/navigation.rviz"/>
-</launch>

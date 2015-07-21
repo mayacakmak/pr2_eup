@@ -7,6 +7,15 @@ from pr2_eup.msg import RobotType
 
 
 def test_all(robot):
+
+    Robot.do(robot.interface.display_message,
+        message='Say test microphone')
+
+    command = Robot.wait(robot.speech_monitor)
+
+    Robot.do(robot.interface.display_message,
+        message='you said:' + command,
+        duration=3)
     
     Robot.do(robot.interface.ask_choice,
         message='Press Start when you are ready:',

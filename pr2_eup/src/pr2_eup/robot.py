@@ -2,6 +2,8 @@ from interface import Interface
 from location_db import LocationDb
 from sound_db import SoundDb
 from navigation import Navigation
+from command_db import CommandDb
+from speech_monitor import SpeechMonitor
 from voice import Voice
 from head import Head
 from event_monitor import EventMonitor
@@ -35,6 +37,9 @@ class RobotFactory(object):
             sound_db.set('sound' + str(i+1))
         voice = Voice(sound_db)
 
+        command_db = CommandDb('command_db')
+        speech_monitor = SpeechMonitor(command_db)
+
         # Head
         # TODO: Head action database?
         if robot_type == RobotType.PR2:
@@ -47,16 +52,23 @@ class RobotFactory(object):
         # TODO: Arm action execution
         #arms = Arms()
 
-        robot = Robot(robot_type, interface, navigation, voice, head)
+        robot = Robot(robot_type,
+            interface, navigation, voice, head,
+            speech_monitor)
+
         return robot
 
 class Robot(object):
-    def __init__(self, robot_type, interface, navigation, voice, head):
+    def __init__(self, robot_type,
+        interface, navigation, voice, head,
+        speech_monitor):
+
         self.robot_type = robot_type
         self.interface = interface
         self.navigation = navigation
         self.voice = voice
         self.head = head
+        self.speech_monitor = speech_monitor
 
     def start_robot(self):
         update_thread = Thread(target=self._run)

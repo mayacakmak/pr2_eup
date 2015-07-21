@@ -12,7 +12,8 @@ class CommandDb(Db):
         self._commands = f.readlines()
         f.close()
         for c in self._commands:
-            self.set(c)
+            command = c.rstrip()
+            self.set(command)
 
     def set(self, command):
         self._db[command] = command

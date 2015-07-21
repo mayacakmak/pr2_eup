@@ -70,6 +70,8 @@ class Robot(object):
         self.head = head
         self.speech_monitor = speech_monitor
 
+        self.voice.play_sound('sound10')
+
     def start_robot(self):
         update_thread = Thread(target=self._run)
         update_thread.start()

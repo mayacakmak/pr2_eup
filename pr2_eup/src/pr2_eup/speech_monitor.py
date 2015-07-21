@@ -15,9 +15,12 @@ class SpeechMonitor():
 
     def receive_sphinx_result(self, data):
         self._speech_lock.acquire()
-        self._previous_command = self._received_command
-        self._received_command = data.data
-        rospy.loginfo('Received command:' + self._received_command)
+        if self._speech_db.get(data.data) is not None:
+            self._previous_command = self._received_command
+            self._received_command = data.data
+            rospy.loginfo('Received command:' + self._received_command)
+        else:
+            rospy.loginfo('Unrecognized speech:' + data.data)
         self._speech_lock.release()
 
     def join(self, timeout=None):

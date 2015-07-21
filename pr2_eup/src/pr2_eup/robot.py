@@ -105,3 +105,35 @@ class Robot(object):
 
         if self.head is not None:
             self.head.update()
+
+    ### Function wrappers
+
+    def display_message(self, **kwargs):
+        Robot.do(self.interface.display_message,
+            **kwargs)
+    def ask_choice(self, **kwargs):
+        return Robot.do(self.interface.ask_choice,
+            **kwargs)
+    def turn_right(self, **kwargs):
+        Robot.do(self.navigation.turn_right,
+            **kwargs)
+    def turn_left(self, **kwargs):
+        Robot.do(self.navigation.turn_left,
+            **kwargs)
+    def move_forward(self, **kwargs):
+        Robot.do(self.navigation.move_forward,
+            **kwargs)
+    def move_backward(self, **kwargs):
+        Robot.do(self.navigation.move_backward,
+            **kwargs)
+    def move(self, **kwargs):
+        Robot.do(self.navigation.move,
+            **kwargs)
+    def play_sound(self, **kwargs):
+        Robot.do(self.voice.play_sound,
+            **kwargs)
+    def say(self, **kwargs):
+        Robot.do(self.voice.say,
+            **kwargs)
+    def wait_for_speech(self):
+        return Robot.wait(self.speech_monitor)            

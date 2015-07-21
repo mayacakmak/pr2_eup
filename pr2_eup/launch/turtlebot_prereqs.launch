@@ -1,9 +1,7 @@
 <launch>
 
-  <!-- <include file="$(find turtlebot_gazebo)/launch/turtlebot_playground.launch" /> -->
-  
   <!-- Use sim time. -->
-  <param name="/use_sim_time" value="true" />
+  <!-- <param name="/use_sim_time" value="true" />-->
 
   <!-- Map server -->
   <!-- <arg name="map_file" default="$(find turtlebot_gazebo)/maps/playground.yaml"/>
@@ -22,13 +20,10 @@
   <!-- Move base -->
   <!-- <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/> -->
 
-  <!-- rviz -->
-  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rapid_turtlebot)/config/navigation.rviz"/> -->
-
   <!-- Websocket -->
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
 
-  <!-- Sound on the desktop -->
+  <!-- Sound -->
   <include file="$(find sound_play)/soundplay_node.launch" />
 
   <!-- Speech recognition backend -->

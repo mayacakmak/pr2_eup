@@ -27,7 +27,7 @@ def main_loop(robot):
     elif command == 'command2':
         robot.move(x=0.0, y=0.5, theta=-0.75, duration=4)
     else:
-        robot.say('I could not hear you.')
+        robot.say(text='I could not hear you.')
 
 #############################################
 

@@ -9,14 +9,21 @@ import signal
 import time
 from threading import Lock
 from event_monitor import EventMonitor
+from pr2_eup.msg import RobotType
 
 
 class Navigation(object):
-    
-    def __init__(self, location_db, tf_listener):
 
-        self._move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-        self._base_controller_publisher = rospy.Publisher('/base_controller/command', Twist, queue_size=10)
+    def __init__(self, robot_type, location_db, tf_listener):
+
+        self._move_base_client = actionlib.SimpleActionClient(
+            'move_base', MoveBaseAction)
+        if robot_type == RobotType.PR2:
+            self._base_controller_publisher = rospy.Publisher(
+                '/base_controller/command', Twist, queue_size=10)
+        else:
+            self._base_controller_publisher = rospy.Publisher(
+                'mobile_base/commands/velocity', Twist, queue_size=10)
 
         self._base_frame = 'base_footprint'
         self._world_frame = 'map'

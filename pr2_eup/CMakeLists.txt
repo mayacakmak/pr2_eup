@@ -49,6 +49,7 @@ add_message_files(
   FILES
   InterfaceParams.msg
   InterfaceSubmission.msg
+  RobotType.msg
 )
 
 ## Generate services in the 'srv' folder

@@ -7,29 +7,27 @@ from head import Head
 from event_monitor import EventMonitor
 from pr2_eup.msg import InterfaceParams
 from pr2_eup.msg import InterfaceSubmission
+from pr2_eup.msg import RobotType
 import rospy
 import tf
 import time
 from threading import Thread
 
-TURTLEBOT = 'Chester'
-PR2 = 'Rosie'
-
 class RobotFactory(object):
 
-    def build(self, robot_name):
+    def build(self, robot_type):
         """Builds a robot object.
 
         Returns: Robot. A robot object.
         """
 
         # Interface
-        interface = Interface(robot_name)
+        interface = Interface(robot_type)
 
         # Navigation
         tf_listener = tf.TransformListener()
         location_db = LocationDb('dummy', tf_listener)
-        navigation = Navigation(location_db, tf_listener)
+        navigation = Navigation(robot_type, location_db, tf_listener)
 
         # Speech and sounds
         sound_db = SoundDb('dummy')
@@ -37,7 +35,7 @@ class RobotFactory(object):
 
         # Head
         # TODO: Head action database?
-        if robot_name == PR2:
+        if robot_type == RobotType.PR2:
             head = Head()
         else:
             head = None
@@ -47,11 +45,12 @@ class RobotFactory(object):
         # TODO: Arm action execution
         #arms = Arms()
 
-        robot = Robot(robot_name, interface, navigation, voice, head)
+        robot = Robot(robot_type, interface, navigation, voice, head)
         return robot
 
 class Robot(object):
-    def __init__(self, robot_name, interface, navigation, voice, head):
+    def __init__(self, robot_type, interface, navigation, voice, head):
+        self.robot_type = robot_type
         self.interface = interface
         self.navigation = navigation
         self.voice = voice

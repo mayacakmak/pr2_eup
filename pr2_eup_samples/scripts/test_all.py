@@ -3,9 +3,8 @@ import argparse
 import rospy
 import pr2_eup
 from pr2_eup.robot import Robot
+from pr2_eup.msg import RobotType
 
-TURTLEBOT = 'Chester'
-PR2 = 'Rosie'
 
 def test_all(robot):
     
@@ -37,7 +36,7 @@ def test_all(robot):
 if __name__ == '__main__':
 
     rospy.init_node('test_pr2_eup')
-    robot = pr2_eup.RobotFactory().build(TURTLEBOT)
+    robot = pr2_eup.RobotFactory().build(RobotType.TURTLEBOT)
     robot.start_robot()
     while not rospy.is_shutdown():
         test_all(robot)

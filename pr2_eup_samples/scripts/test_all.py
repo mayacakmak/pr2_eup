@@ -11,6 +11,8 @@ def test_all(robot):
     Robot.do(robot.interface.ask_choice,
         message='Press Start when you are ready:',
         choices=['Start'])
+    Robot.do(robot.voice.say,
+        text='Starting to move.')
     Robot.do(robot.interface.display_message,
         message='Robot moving forward')
     Robot.do(robot.navigation.move_forward,

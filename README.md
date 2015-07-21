@@ -7,7 +7,11 @@ Based on Justin Huang's [rapid_robot](https://github.com/jstnhuang/rapid_robot).
 - `pr2_eup_samples` contains examples of how the interface can be used.
 
 ## Installation
-You need to install [meteor](https://www.meteor.com/).
+ - Install [meteor](https://www.meteor.com/).
+ - Install [pocketsphinx](http://wiki.ros.org/pocketsphinx)
+ ```
+ sudo apt-get install ros-hydro-pocketsphinx
+ ```
 
 ## Running the test demo
 To run the delivery demo, you need:

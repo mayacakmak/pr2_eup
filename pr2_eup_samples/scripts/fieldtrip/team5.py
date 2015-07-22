@@ -13,11 +13,12 @@ def main_loop(robot):
         choices = ['yes', 'no'])
     if choice == 'yes':
         robot.say(text="let's go!")
-        robot.go_to(location_name = 'Door')
+        robot.go_to(location_name = 'Kitchen')
     elif choice == 'no':
         robot.say(text="you don't have a choice")
+        robot.sleep(duration=2)
         robot.say(text="I don't take no for an answer")
-        robot.move(x=1.5, y=0, theta=6.3, duration=3.1)
+        robot.move(x=0.4, y=0, theta=0.63, duration=3.1)
     else:
         robot.say(text="I don't understand you.")
         robot.play_sound(sound_name = 'sound5')

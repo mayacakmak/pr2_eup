@@ -6,7 +6,10 @@ from pr2_eup.msg import RobotType
 ######### ADD YOUR PROGRAM BELOW ###########
 
 def main_loop(robot):
-
+    robot.display_message(
+        message='Welcome to the restaurant. How many people?',
+        duration=3)
+        command = robot.wait_for_speech()
     robot.sleep(duration=5)
 
 

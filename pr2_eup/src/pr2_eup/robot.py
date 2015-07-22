@@ -28,7 +28,7 @@ class RobotFactory(object):
 
         # Navigation
         tf_listener = tf.TransformListener()
-        location_db = LocationDb('dummy', tf_listener)
+        location_db = LocationDb('location_db', tf_listener)
         navigation = Navigation(robot_type, location_db, tf_listener)
 
         # Speech and sounds
@@ -54,14 +54,14 @@ class RobotFactory(object):
 
         robot = Robot(robot_type,
             interface, navigation, voice, head,
-            speech_monitor)
+            speech_monitor, tf_listener)
 
         return robot
 
 class Robot(object):
     def __init__(self, robot_type,
         interface, navigation, voice, head,
-        speech_monitor):
+        speech_monitor, tf_listener):
 
         self.robot_type = robot_type
         self.interface = interface
@@ -69,8 +69,19 @@ class Robot(object):
         self.voice = voice
         self.head = head
         self.speech_monitor = speech_monitor
-
+	self.tf_listener = tf_listener
         #self.voice.play_sound('sound10')
+
+
+    def location_db(self, db_filename):
+        """Returns a location database.
+        The location DB file can be any Python shelve file that maps strings
+        to geometry_msgs/PoseStamped messages.
+        Args:
+          db_filename: string. The location on the filesystem of DB file.
+        Returns: LocationDb.
+        """
+        return LocationDb(db_filename, self.tf_listener)
 
     def start_robot(self):
         update_thread = Thread(target=self._run)
@@ -144,3 +155,6 @@ class Robot(object):
         received_command = Robot.wait(self.speech_monitor)
         self.speech_monitor.set_command_list(None)
         return received_command
+    def go_to(self, **kwargs):
+        Robot.do(self.navigation.go_to_location,
+            **kwargs)

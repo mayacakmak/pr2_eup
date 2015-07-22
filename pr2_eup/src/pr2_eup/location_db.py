@@ -1,11 +1,13 @@
 from db import Db
-
+import rospy
+import shelve
 class LocationDb(Db):
     def __init__(self, db_filename, tf_listener):
-        Db.__init__(self, db_filename)
+	rospy.loginfo("File name: " + str(db_filename)) 
+        self._db = shelve.open(db_filename)
         self._tf_listener = tf_listener
 
-    def set(self, name, pose_stamped):
+    def set_location(self, name, pose_stamped):
         if rospy.resolve_name(pose_stamped.header.frame_id) != '/map':
             pose_stamped.header.stamp = rospy.Time(0)
             try:
@@ -19,3 +21,21 @@ class LocationDb(Db):
 
         self._db[name] = pose_stamped
         return True
+
+    def get_all_locations(self):
+        return self._db.items()
+
+    def get_location(self, name):
+        if name in self._db:
+            return self._db[name]
+        else:
+            return None
+
+    def remove_location(self, name):
+        if name in self._db:
+            del self._db[name]
+            return True
+        else:
+            return False
+
+

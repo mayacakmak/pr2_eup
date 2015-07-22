@@ -22,12 +22,15 @@ def main_loop(robot):
     robot.say(text='Now, lets speak. What should I do?')
     command = robot.wait_for_speech()
         
-    if command == 'command1':
-        robot.move(x=0.5, y=0.0, theta=0.75, duration=4)
-    elif command == 'command2':
-        robot.move(x=0.0, y=0.5, theta=-0.75, duration=4)
+    if command == 'one':
+        robot.move(x=0.5, y=0.0, theta=0, duration=1)
+    elif command == 'two':
+        robot.move(x=-0.5, y=0.0, theta=0, duration=1)
     else:
         robot.say(text='I could not hear you.')
+
+    robot.display_message(message='Going to drive now', duration=3)
+    robot.go_to(location_name='B')
 
 #############################################
 

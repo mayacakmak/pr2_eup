@@ -28,7 +28,7 @@ def main_loop(robot):
     	if choice == 'No':
     		robot.sleep(duration=4)
     	else:
-    		robot.display_message(message='I did not hear that')
+    		robot.display_message(message='I did not hear that', duration=3)
 
     while(i==2):
     	choice = robot.ask_choice(

@@ -20,6 +20,11 @@ from pr2_eup.msg import RobotType
 #!/o	Go to door
 #!/o	Have a nice day… get out. 
 
+Robot says:  Please fallow me to the door
+‘Move
+Turn left speed .5
+Go to door 
+Robot say Please leave now if you are not out the door in 10 sec I will self-destruct 
 
 def main_loop(robot):
 

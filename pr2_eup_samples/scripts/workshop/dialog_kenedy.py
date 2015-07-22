@@ -15,7 +15,7 @@ def main_loop(robot):
     if number_of_guests == 'one':
         robot.move_backward(duration=2)
     elif number_of_guests == 'two':
-        robot.turn_left(duration=3) 
+        robot.turn_left(duration=3)
 
     robot.say(text='may I take your order?')
     command = robot.wait_for_speech()

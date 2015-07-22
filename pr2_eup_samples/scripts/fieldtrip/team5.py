@@ -6,19 +6,23 @@ from pr2_eup.msg import RobotType
 ######### ADD YOUR PROGRAM BELOW ###########
 
 def main_loop(robot):
+
+    
     choice = robot.ask_choice(
         message = 'are we going on a trip?'
         choices = ['yes', 'no'])
     if choice == 'yes':
+        robot.say("let's go!")
         robot.go_to(location_name = 'Door')
-        robot.say("Let's go")
     elif choice == 'no':
         robot.say("you don't have a choice")
         robot.say("I don't take no for an answer")
         robot.move(5, 0, 6.3, 3.1)
     else:
-        robot.say("I don't understand")
+        robot.say("I don't understand you.")
         robot.play_sound(sound_name = 'sound5')
+        
+        
 
     robot.sleep(duration=5)
 

@@ -32,7 +32,7 @@ def main_loop(robot):
             
         
     else:
-        robot.say(text="I speak in rhymes")
+        robot.say(text="I speak in rhymes, these times, crimes, mimes, I am a rapping winna, what's for dinna")
         
         
 robot.sleep(duration=5)

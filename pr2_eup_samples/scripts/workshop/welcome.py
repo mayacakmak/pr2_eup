@@ -39,8 +39,8 @@ def main_loop(robot):
 							    	display_message(message='Please follow me.', duration=8)
 						else:
 						    say(text='Restarting seating program, please wait.')
-							display_message(message='Restarting seating program, please wait.', duration=8)
-				else:
+							display_message(message='Restarting seatprogram, please wait.', duration=8)
+				else:ing 
 				    say(text='I am sorry, but we only seat parties of one and two.')
 					display_message(message='I am sorry, but we only seat parties of one and two.', duration=8)
 					say(text='Restarting seating program, please wait.')

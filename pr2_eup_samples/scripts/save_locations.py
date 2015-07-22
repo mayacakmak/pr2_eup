@@ -2,6 +2,7 @@
 from geometry_msgs.msg import PoseStamped
 import argparse
 import pr2_eup
+from pr2_eup.msg import RobotType
 import rospy
 import tf
 
@@ -55,7 +56,7 @@ def go_to_location(robot, pose_stamped):
 
 if __name__ == '__main__':
     rospy.init_node('save_locations')
-    robot = pr2_eup.RobotFactory().build()
+    robot = pr2_eup.RobotFactory().build(RobotType.TURTLEBOT)
 
     parser = argparse.ArgumentParser()                                                                                              
     parser.add_argument('filename',

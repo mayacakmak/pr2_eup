@@ -7,22 +7,35 @@ from pr2_eup.msg import RobotType
 def main_loop(robot):
 
     robot.say(
-        text="Should I go in a square or a circle?")
+        text="Should I go in a square or a circle or a triangle?")
     command = robot.wait_for_speech(
-        commands=['square', 'circle'])
-    
+        commands=['square', 'circle', 'triangle'])
+ for i in range 3   
     if command == 'circle':
         robot.say(text="swag")
         for i in range (36):
             robot.move_forward (duration=1)
             robot.turn_right(duration=0.5)
-    else:
+            i= i+3
+    elif command == 'square'
         robot.say(text="squares are for squares")
         for i in range (36):
             robot.move_forward(duration=1)
             robot.turn_right(duration=0.5)
+            i = i+3
+    elif command == 'triangle'
+        robot.say(text='illuminati, so do you have a password? ha ha')
+        for i in range (3):
+            robot.move_forward(duriation=2)
+            robot.turn_right(duration=6)
+            i = i+3
+            
         
-    robot.sleep(duration=5)
+    else:
+        robot.say(text="girl talk clearer")
+        
+        
+robot.sleep(duration=5)
 
 
 #############################################

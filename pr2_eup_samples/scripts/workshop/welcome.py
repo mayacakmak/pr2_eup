@@ -21,7 +21,7 @@ def main_loop(robot):
 							go_to(location_name='Table2')
 					    		say(text='You may be seated')
 							display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
-							say(text='Your sever will be with you shortly. Thank you')
+							say(text='Your server will be with you shortly. Thank you')
 							display_message(message='Thank you', duration=5)
 							go_to(location_name='Door')
 						else if choice == 'Not yet'

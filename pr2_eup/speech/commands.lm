@@ -1,4 +1,4 @@
-Language model created by QuickLM on Tue Jul 21 19:36:18 EDT 2015
+Language model created by QuickLM on Tue Jul 21 20:09:12 EDT 2015
 Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
 
 The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
@@ -7,61 +7,85 @@ The code that was used to produce this language model is available in Open Sourc
 Please visit http://www.speech.cs.cmu.edu/tools/ for more information
 
 The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
-This model based on a corpus of 11 sentences and 13 words
+This model based on a corpus of 17 sentences and 19 words
 
 \data\
-ngram 1=13
-ngram 2=22
-ngram 3=11
+ngram 1=19
+ngram 2=34
+ngram 3=17
 
 \1-grams:
 -0.7782 </s> -0.3010
 -0.7782 <s> -0.2218
--1.8195 ALMOST -0.2218
--1.8195 FIVE-PEOPLE-PLEASE -0.2218
--1.8195 FOUR-PEOPLE-PLEASE -0.2218
--1.8195 NO -0.2218
--1.8195 NO-THANK-YOU -0.2218
--1.8195 ONE-PERSON-PLEASE -0.2218
--1.8195 SIX-PEOPLE-PLEASE -0.2218
--1.8195 THREE-PEOPLE-PLEASE -0.2218
--1.8195 TWO-PEOPLE-PLEASE -0.2218
--1.8195 YES -0.2218
--1.8195 YES-PLEASE -0.2218
+-2.0086 ALMOST -0.2218
+-2.0086 FIVE -0.2218
+-2.0086 FIVE-PEOPLE-PLEASE -0.2218
+-2.0086 FOUR -0.2218
+-2.0086 FOUR-PEOPLE-PLEASE -0.2218
+-2.0086 NO -0.2218
+-2.0086 NO-THANK-YOU -0.2218
+-2.0086 ONE -0.2218
+-2.0086 ONE-PERSON-PLEASE -0.2218
+-2.0086 SIX -0.2218
+-2.0086 SIX-PEOPLE-PLEASE -0.2218
+-2.0086 THREE -0.2218
+-2.0086 THREE-PEOPLE-PLEASE -0.2218
+-2.0086 TWO -0.2218
+-2.0086 TWO-PEOPLE-PLEASE -0.2218
+-2.0086 YES -0.2218
+-2.0086 YES-PLEASE -0.2218
 
 \2-grams:
--1.3424 <s> ALMOST 0.0000
--1.3424 <s> FIVE-PEOPLE-PLEASE 0.0000
--1.3424 <s> FOUR-PEOPLE-PLEASE 0.0000
--1.3424 <s> NO 0.0000
--1.3424 <s> NO-THANK-YOU 0.0000
--1.3424 <s> ONE-PERSON-PLEASE 0.0000
--1.3424 <s> SIX-PEOPLE-PLEASE 0.0000
--1.3424 <s> THREE-PEOPLE-PLEASE 0.0000
--1.3424 <s> TWO-PEOPLE-PLEASE 0.0000
--1.3424 <s> YES 0.0000
--1.3424 <s> YES-PLEASE 0.0000
+-1.5315 <s> ALMOST 0.0000
+-1.5315 <s> FIVE 0.0000
+-1.5315 <s> FIVE-PEOPLE-PLEASE 0.0000
+-1.5315 <s> FOUR 0.0000
+-1.5315 <s> FOUR-PEOPLE-PLEASE 0.0000
+-1.5315 <s> NO 0.0000
+-1.5315 <s> NO-THANK-YOU 0.0000
+-1.5315 <s> ONE 0.0000
+-1.5315 <s> ONE-PERSON-PLEASE 0.0000
+-1.5315 <s> SIX 0.0000
+-1.5315 <s> SIX-PEOPLE-PLEASE 0.0000
+-1.5315 <s> THREE 0.0000
+-1.5315 <s> THREE-PEOPLE-PLEASE 0.0000
+-1.5315 <s> TWO 0.0000
+-1.5315 <s> TWO-PEOPLE-PLEASE 0.0000
+-1.5315 <s> YES 0.0000
+-1.5315 <s> YES-PLEASE 0.0000
 -0.3010 ALMOST </s> -0.3010
+-0.3010 FIVE </s> -0.3010
 -0.3010 FIVE-PEOPLE-PLEASE </s> -0.3010
+-0.3010 FOUR </s> -0.3010
 -0.3010 FOUR-PEOPLE-PLEASE </s> -0.3010
 -0.3010 NO </s> -0.3010
 -0.3010 NO-THANK-YOU </s> -0.3010
+-0.3010 ONE </s> -0.3010
 -0.3010 ONE-PERSON-PLEASE </s> -0.3010
+-0.3010 SIX </s> -0.3010
 -0.3010 SIX-PEOPLE-PLEASE </s> -0.3010
+-0.3010 THREE </s> -0.3010
 -0.3010 THREE-PEOPLE-PLEASE </s> -0.3010
+-0.3010 TWO </s> -0.3010
 -0.3010 TWO-PEOPLE-PLEASE </s> -0.3010
 -0.3010 YES </s> -0.3010
 -0.3010 YES-PLEASE </s> -0.3010
 
 \3-grams:
 -0.3010 <s> ALMOST </s>
+-0.3010 <s> FIVE </s>
 -0.3010 <s> FIVE-PEOPLE-PLEASE </s>
+-0.3010 <s> FOUR </s>
 -0.3010 <s> FOUR-PEOPLE-PLEASE </s>
 -0.3010 <s> NO </s>
 -0.3010 <s> NO-THANK-YOU </s>
+-0.3010 <s> ONE </s>
 -0.3010 <s> ONE-PERSON-PLEASE </s>
+-0.3010 <s> SIX </s>
 -0.3010 <s> SIX-PEOPLE-PLEASE </s>
+-0.3010 <s> THREE </s>
 -0.3010 <s> THREE-PEOPLE-PLEASE </s>
+-0.3010 <s> TWO </s>
 -0.3010 <s> TWO-PEOPLE-PLEASE </s>
 -0.3010 <s> YES </s>
 -0.3010 <s> YES-PLEASE </s>

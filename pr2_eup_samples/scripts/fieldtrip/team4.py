@@ -6,7 +6,8 @@ from pr2_eup.msg import RobotType
 ######### ADD YOUR PROGRAM BELOW ###########
 
 def main_loop(robot):
-    robot.say(text = 'Do you have more than 5 people in your party?')
+    robot.say(
+        text = 'Do you have more than 5 people in your party?')
     numPeople = robot.wait_for_speech(['yes', 'no'])
     if numPeople == 'yes':
     	robot.say(text = 'Okay, follow me')
@@ -18,14 +19,15 @@ def main_loop(robot):
     	go_to(location_name = 'Table2')
     robot.say(text = 'Would you like soup or salad?')
     appetizerChoice = robot.wait_for_speech(['soup','salad'])
-	go_to(location_name = 'Kitchen')
-	robot.say(text = 'They ordered' + appetizerChoice)
-	robot.sleep(20)
-	if numPeople == 'yes':
-		go_to(location_name = 'Table1')
-	else:
-		go_to(location_name = 'Table2')
-	robot.say(text = 'Enjoy your meal!')
+    robot.go_to(location_name = 'Kitchen')
+    robot.say(text = 'They ordered' + appetizerChoice)
+    robot.sleep(20)
+    if numPeople == 'yes':
+        go_to(location_name = 'Table1')
+    else:
+        go_to(location_name = 'Table2')
+    robot.say(text = 'Enjoy your meal!')
+
 #############################################
 
 if __name__ == '__main__':

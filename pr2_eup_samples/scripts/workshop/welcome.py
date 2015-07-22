@@ -9,7 +9,9 @@ def main_loop(robot):
     robot.display_message(
         message='Welcome to the restaurant. How many people?',
         duration=3)
-        command = robot.wait_for_speech()
+    command = robot.wait_for_speech()
+    robot.say(text='Okay, come with me')
+    robot.move(x=0.5, y= 0.0, theta=0.5, duration=3)
     robot.sleep(duration=5)
 
 

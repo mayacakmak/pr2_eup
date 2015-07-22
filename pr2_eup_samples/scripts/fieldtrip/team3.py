@@ -8,7 +8,7 @@ from pr2_eup.msg import RobotType
 def main_loop(robot):
 	#display_message("Would you like me to deliver something?")
 	#wait_for_speech
-    #robot.sleep(duration=5)
+        #robot.sleep(duration=5)
 
 	i = 1
 	while(i==1):
@@ -20,7 +20,7 @@ def main_loop(robot):
     		choice = robot.ask_choice(
         	message='Are you ready for me to go?',
         	choices=['Yes', 'No'])
-        	if choice == 'Yes'
+        	if choice == 'Yes':
         		robot.go_to(location_name='Table1')
         		i = i + 1
         	else:
@@ -30,16 +30,16 @@ def main_loop(robot):
     	else:
     		robot.display_message(message='I did not hear that', duration=3)
 
-    while(i==2):
-    	choice = robot.ask_choice(
-        	message='Would you like me to go to the kitchen or the door?',
-        	choices=['kitchen', 'door'])	
-    		if choice == 'kitchen'
-        		robot.go_to(location_name='kitchen')
-        		i = i + 1
-        	if choice == 'door':
-        		robot.go_to(location_name='door')
-        		i = i + 1
+        while(i==2):
+		choice = robot.ask_choice(
+			message='Would you like me to go to the kitchen or the door?',
+			choices=['kitchen', 'door'])	
+		if choice == 'kitchen':
+			robot.go_to(location_name='kitchen')
+			i = i + 1
+		if choice == 'door':
+			robot.go_to(location_name='door')
+			i = i + 1
 
 #############################################
 

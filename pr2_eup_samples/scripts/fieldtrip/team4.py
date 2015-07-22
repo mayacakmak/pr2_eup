@@ -8,20 +8,20 @@ from pr2_eup.msg import RobotType
 def main_loop(robot):
     robot.say(
         text = 'Do you have more than 5 people in your party?')
-    numPeople = robot.wait_for_speech(['yes', 'no'])
+    numPeople = robot.wait_for_speech(commands=['yes', 'no'])
     if numPeople == 'yes':
     	robot.say(text = 'Okay, follow me')
-    	robot.sleep(3)
+    	robot.sleep(duration=3)
     	go_to(location_name = 'Table1')
     else:
     	robot.say(text = 'Okay, follow me')
-    	robot.sleep(3)
+    	robot.sleep(duration=3)
     	go_to(location_name = 'Table2')
     robot.say(text = 'Would you like soup or salad?')
-    appetizerChoice = robot.wait_for_speech(['soup','salad'])
+    appetizerChoice = robot.wait_for_speech(commands=['soup','salad'])
     robot.go_to(location_name = 'Kitchen')
     robot.say(text = 'They ordered' + appetizerChoice)
-    robot.sleep(20)
+    robot.sleep(duration=20)
     if numPeople == 'yes':
         go_to(location_name = 'Table1')
     else:

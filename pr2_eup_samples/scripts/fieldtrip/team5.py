@@ -15,7 +15,7 @@ def main_loop(robot):
     elif choice == 'no':
         robot.say("you don't have a choice")
         robot.say("I don't take no for an answer")
-        robot.move(5, 0, 6.3, 3)
+        robot.move(5, 0, 6.3, 3.1)
     else:
         robot.say("I don't understand")
         robot.play_sound(sound_name = 'sound5')

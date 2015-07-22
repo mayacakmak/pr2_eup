@@ -32,10 +32,10 @@ class Navigation(object):
         self._location_db = location_db
 
     def move_forward(self, duration):
-        return self.move(0.75, 0, 0, duration)
+        return self.move(0.4, 0, 0, duration)
 
     def move_backward(self, duration):
-        return self.move(-0.75, 0, 0, duration)
+        return self.move(-0.4, 0, 0, duration)
 
     def turn_left(self, duration):
         return self.move(0, 0, 0.75, duration)

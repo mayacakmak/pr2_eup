@@ -12,16 +12,18 @@ def main_loop(robot):
 			choice = ask_choice(message='How many people are in your party?', choices=['1', '2', 'Other'])
 				if choice == '1':
 					say(text='Okay. Party of one, are you ready to be seated?')
-					choice = ask_choice(message='Okay. Party of one, are you ready to be seated?', choices=['Yes', 'Not yet', 'cancel')
+					choice = ask_choice(message='Okay. Party of one, are you ready to be seated?', choices=['Yes', 'Not yet', 'Cancel')
 						if choice == 'Yes':
 							say(text='please follow me')
 							display_message(message='Please follow me.', duration=8)
+							go_to(location_name='Table1')
 						else if choice == 'Not yet'
 							say(text='Okay, I will wait. Press okay when you are ready to be seated')
 							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
 								if choice == 'Okay'
 									say(text='please follow me')
-							    	display_message(message='Please follow me.', duration=8)
+							    		display_message(message='Please follow me.', duration=8)
+							    		go_to(location_name='Table1')
 						else:
 						    say(text='Restarting seating program, please wait.')
 							display_message(message='Restarting seating program, please wait.', duration=8)
@@ -31,12 +33,14 @@ def main_loop(robot):
 						if choice == 'Yes':
 							say(text='please follow me')
 							display_message(message='Please follow me.', duration=8)
+							go_to(location_name='Table2')
 						else if choice == 'Not yet'
 							say(text='Okay, I will wait. Press okay when you are ready to be seated')
 							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
 								if choice == 'Okay'
 									say(text='please follow me')
-							    	display_message(message='Please follow me.', duration=8)
+							    		display_message(message='Please follow me.', duration=8)
+							    		go_to(location_name='Table2')
 						else:
 						    say(text='Restarting seating program, please wait.')
 							display_message(message='Restarting seating program, please wait.', duration=8)

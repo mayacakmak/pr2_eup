@@ -13,20 +13,57 @@ def main_loop(robot):
 #start script here
 
 choice = robot.ask_choice(
-    message = 'What is your favorite color?',
-    choices=["red", "blue", "green", "yellow"])
-   
-   
-   
-    if choice == "red":
-        say("Good luck will come your way!")
-    elif choice == "blue":
-        say ("hggkhadowhlasgnv")
-    elif choice == "green":
-        say ("khahofbwocn")
-    else:
-        say ("haosdfofd")
-
+    message = 'Choose a number between one and four',
+    choices=["1", "2", "3", "4"])
+    if choice == "1"
+        robot.ask.choice(
+            message = "Choose a color: red, blue, green or yellow"
+            choices = ["red","blue","green","yellow"]
+                if choice == "red":
+                    robot.say("Good luck will come your way!")
+                elif choice == "blue":
+                    robot.say ("Happiness is the key to life, you will soon unlock your true potential ")
+                elif choice == "green":
+                    robot.say ("Go buy a lottery ticket")
+                else:
+                    robot.say ("Nope.")
+    if choice == "2"
+        robot.ask.choice(
+            message = "Choose a color: red, blue, green or yellow"
+            choices = ["red","blue","green","yellow"]
+                if choice == "red":
+                    robot.say("Good luck will come your way!")
+                elif choice == "blue":
+                    robot.say ("Happiness is the key to life, you will soon unlock your true potential ")
+                elif choice == "green":
+                    robot.say ("Go buy a lottery ticket")
+                else:
+                    robot.say ("Nope.")
+    if choice == "3"
+        robot.ask.choice(
+            message = "Choose a color: red, blue, green or yellow"
+            choices = ["red","blue","green","yellow"]
+                if choice == "red":
+                    robot.say("Good luck will come your way!")
+                elif choice == "blue":
+                    robot.say ("Happiness is the key to life, you will soon unlock your true potential ")
+                elif choice == "green":
+                    robot.say ("Go buy a lottery ticket")
+                else:
+                    robot.say ("Nope.")
+                
+    if choice == "4"
+        robot.ask.choice(
+            message = "Choose a color: red, blue, green or yellow"
+            choices = ["red","blue","green","yellow"]
+                if choice == "red":
+                    robot.say("Good luck will come your way!")
+                elif choice == "blue":
+                    robot.say ("Happiness is the key to life, you will soon unlock your true potential ")
+                elif choice == "green":
+                    robot.say ("Go buy a lottery ticket")
+                else:
+                    robot.say ("Nope.")
 
 #############################################
 

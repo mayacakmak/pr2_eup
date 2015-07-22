@@ -16,7 +16,7 @@ def main_loop(robot):
 						if choice == 'Yes':
 							say(text='please follow me')
 							display_message(message='Please follow me.', duration=8)
-						else if choice == 'No'
+						else if choice == 'Not yet'
 							say(text='Okay, I will wait. Press okay when you are ready to be seated')
 							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
 								if choice == 'Okay'
@@ -39,8 +39,8 @@ def main_loop(robot):
 							    	display_message(message='Please follow me.', duration=8)
 						else:
 						    say(text='Restarting seating program, please wait.')
-							display_message(message='Restarting seatprogram, please wait.', duration=8)
-				else:ing 
+							display_message(message='Restarting seating program, please wait.', duration=8)
+				else:
 				    say(text='I am sorry, but we only seat parties of one and two.')
 					display_message(message='I am sorry, but we only seat parties of one and two.', duration=8)
 					say(text='Restarting seating program, please wait.')

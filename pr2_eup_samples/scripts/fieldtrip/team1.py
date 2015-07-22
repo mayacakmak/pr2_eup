@@ -32,7 +32,7 @@ def main_loop(robot):
             
         
     else:
-        robot.say(text="girl talk clearer")
+        robot.say(text="I speak in rhymes")
         
         
 robot.sleep(duration=5)

@@ -4,7 +4,7 @@ import pr2_eup
 from pr2_eup.msg import RobotType
 
 ######### ADD YOUR PROGRAM BELOW ###########
-ask_choice "Should I go in a square or a circle?", yes = 
+ask_choice "Should I go in a square or a circle?"
 #sleep(3)
 wait_for_speech()
     if raw_input() = "circles"

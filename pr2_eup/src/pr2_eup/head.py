@@ -19,8 +19,6 @@ from pr2_controllers_msgs.msg import PointHeadAction, PointHeadGoal
 from geometry_msgs.msg import *
 from tf import TransformListener
 
-from pr2_social_gaze.msg import *
-
 class Head:
 
         # 'LOOK_FORWARD: 'LOOK_FORWARD',

@@ -28,12 +28,12 @@ def main_loop(robot):
     while(i==2):
         choice = robot.ask_choice(
             message='Would you like me to go to the kitchen or the door?',
-            choices=['kitchen', 'door'])	
-        if choice == 'kitchen':
-            robot.go_to(location_name='kitchen')
+            choices=['Kitchen', 'Door'])	
+        if choice == 'Kitchen':
+            robot.go_to(location_name='Kitchen')
             i = i + 1
-        elif choice == 'door':
-            robot.go_to(location_name='door')
+        elif choice == 'Door':
+            robot.go_to(location_name='Door')
             i = i + 1
 
 #############################################

@@ -23,6 +23,7 @@ def main_loop(robot):
 							display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
 							say(text='Your sever will be with you shortly. Thank you')
 							display_message(message='Thank you', duration=5)
+							go_to(location_name='Door')
 						else if choice == 'Not yet'
 							say(text='Okay, I will wait. Press okay when you are ready to be seated')
 							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
@@ -37,6 +38,7 @@ def main_loop(robot):
 									display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
 									say(text='Your sever will be with you shortly. Thank you')
 									display_message(message='Thank you', duration=5)
+									go_to(location_name='Door')
 						else:
 						    say(text='Restarting seating program, please wait.')
 							display_message(message='Restarting seating program, please wait.', duration=8)
@@ -54,6 +56,7 @@ def main_loop(robot):
 								display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
 								say(text='Your sever will be with you shortly. Thank you')
 								display_message(message='Thank you', duration=5)
+								go_to(location_name='Door')
 						else if choice == 'Not yet'
 							say(text='Okay, I will wait. Press okay when you are ready to be seated')
 							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
@@ -65,6 +68,7 @@ def main_loop(robot):
 									display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
 									say(text='Your sever will be with you shortly. Thank you')
 									display_message(message='Thank you', duration=5)
+									go_to(location_name='Door')
 
 						else:
 						    say(text='Restarting seating program, please wait.')

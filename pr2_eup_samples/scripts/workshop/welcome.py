@@ -6,7 +6,6 @@ from pr2_eup.msg import RobotType
 ######### ADD YOUR PROGRAM BELOW ###########
 
 def main_loop(robot):
-    def main_loop():
 	choice = ask_choice(message='Welcome to CyberFood! Please click okay when you are ready to be seated.', choices=['Okay'])
 		if choice == 'Okay':
 			choice = ask_choice(message='How many people are in your party?', choices=['1', '2', 'Other'])

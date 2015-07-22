@@ -7,6 +7,7 @@ from pr2_eup.msg import RobotType
 
 def main_loop(robot):
 
+    go_to (location_name='Door')
     robot.display_message(
         message='Hello, my name is Chester. Welcome to French restaurant',
         duration=3)

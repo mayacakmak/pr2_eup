@@ -9,33 +9,31 @@ def main_loop(robot):
     robot.say(
         text="Should I go in a square or a circle or a triangle?")
     command = robot.wait_for_speech(
-        commands=['square', 'circle', 'triangle'])
- for i in range 3   
-    if command == 'circle':
-        robot.say(text="swag")
-        for i in range (36):
-            robot.move_forward (duration=1)
-            robot.turn_right(duration=0.5)
-            i= i+3
-    elif command == 'square'
-        robot.say(text="squares are for squares")
-        for i in range (36):
-            robot.move_forward(duration=1)
-            robot.turn_right(duration=0.5)
-            i = i+3
-    elif command == 'triangle'
-        robot.say(text='illuminati, so do you have a password? ha ha')
-        for i in range (3):
-            robot.move_forward(duriation=2)
-            robot.turn_right(duration=6)
-            i = i+3
-            
-        
-    else:
-        robot.say(text="I speak in rhymes, these times, crimes, mimes, I am a rapping winna, what's for dinna")
-        
-        
-robot.sleep(duration=5)
+        commands=['square', 'circle', 'triangle', 'no-thank-you'])
+    for i in range(3):
+        if command == 'circle':
+            robot.say(text="swag")
+            for i in range (36):
+                robot.move_forward (duration=1)
+                robot.turn_right(duration=0.5)
+                i= i+3
+        elif command == 'square':
+            robot.say(text="squares are for squares")
+            for i in range (36):
+                robot.move_forward(duration=1)
+                robot.turn_right(duration=0.5)
+                i = i+3
+        elif command == 'triangle':
+            robot.say(text='illuminati, so do you have a password? ha ha')
+            for i in range (3):
+                robot.move_forward(duration=2)
+                robot.turn_right(duration=6)
+                i = i+3
+        else:
+            robot.say(
+                text="I speak in rhymes, these times, crimes, mimes, I am a rapping winna, what's for dinna")
+
+        robot.sleep(duration=5)
 
 
 #############################################

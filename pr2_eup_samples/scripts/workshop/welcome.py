@@ -6,6 +6,7 @@ from pr2_eup.msg import RobotType
 ######### ADD YOUR PROGRAM BELOW ###########
 
 def main_loop(robot):
+	robot.go_to(location_name='Door')
 	choice = robot.ask_choice(message='Welcome to CyberFood! '+
 		'Please click okay to be seated.',
 		choices=['Okay'])

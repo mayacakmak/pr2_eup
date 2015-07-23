@@ -42,7 +42,8 @@ def main_loop(robot):
 				robot.display_message(
 					message=robot_line, duration=8)
 		else:
-			robot_line = 'I am sorry, but we only seat parties of two and three. Please come again. Have a nice day.'
+			robot_line = 'I am sorry, but we only seat parties of two and three. ' +
+				'Please come again. Have a nice day.'
 			robot.say(text=robot_line)
 			robot.display_message(message=robot_line, duration=8)
 			robot_line = 'Restarting seating program, please wait.'

@@ -181,7 +181,7 @@ class Robot(object):
         return result
 
     def go_to(self, **kwargs):
-        is_simulation = False
+        is_simulation = True
         if is_simulation:
             rospy.loginfo('Ignoring go_to')
         else:

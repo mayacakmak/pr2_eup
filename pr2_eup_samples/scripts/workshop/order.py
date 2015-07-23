@@ -19,7 +19,7 @@ def main_loop(robot):
             message='Which table should I take the order from?',
             choices=['Table1', 'Table2'])
 
-        if orders[table_choice] is not None:
+        if orders[table_choice] is None:
             robot.go_to(location_name=table_choice)
             robot_line = 'Are you ready to order?'
             robot.say(text=robot_line)
@@ -62,6 +62,7 @@ def main_loop(robot):
             robot_line = table_choice + ' already ordered.'
             robot.display_message(message=robot_line)
             robot.say(text=robot_line)
+            robot.sleep(3)
 
 
     ## DELIVERY

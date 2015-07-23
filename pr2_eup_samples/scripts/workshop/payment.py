@@ -21,7 +21,7 @@ from pr2_eup.msg import RobotType
 #!/o	Have a nice day… get out. 
 
 number_of_people = {'Table1':2, 'Table2':3}
-has_table_payed = {'Table1':False, 'Table2':False}
+has_table_paid = {'Table1':False, 'Table2':False}
 dessert_orders = {'Table1':None, 'Table2':None}
 
 def main_loop(robot):

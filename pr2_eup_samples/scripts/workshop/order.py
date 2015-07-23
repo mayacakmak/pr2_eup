@@ -29,7 +29,7 @@ def main_loop(robot):
                 robot_line = 'Okay, I will come back later.'
                 robot.say(text=robot_line)
                 robot.display_message(message=robot_line)
-                robot.go_to('Kitchen')
+                robot.go_to(location_name='Kitchen')
             else:
                 robot_line = 'Okay, great.'
                 robot.display_message(message=robot_line)
@@ -37,7 +37,10 @@ def main_loop(robot):
                 robot.turn_right(duration=1)
                 orders[table_choice] = 'one ' + take_order(robot)
                 robot.turn_left(duration=1)
-                orders[table_choice] = orders[table_choice] + ', one ' + take_order(robot)
+                if number_of_people[table_choice] == 2:
+                    robot.turn_left(duration=1)
+                orders[table_choice] = (orders[table_choice]
+                    + ', one ' + take_order(robot))
                 if number_of_people[table_choice] == 3:
                     robot.turn_left(duration=1)
                     orders[table_choice] = orders[table_choice] + ', one ' + take_order(robot)

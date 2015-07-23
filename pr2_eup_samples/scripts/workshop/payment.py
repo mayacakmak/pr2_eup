@@ -26,9 +26,9 @@ dessert_orders = {'Table1':None, 'Table2':None}
 
 def main_loop(robot):
     
-    if has_table_payed['Table1'] and has_table_payed['Table2']:
+    if has_table_paid['Table1'] and has_table_paid['Table2']:
 		
-		robot.say(text='Both tables have payed. We are done for today Rosie.')
+		robot.say(text='Both tables have paid. We are done for today Rosie.')
 		robot.sleep(duration=10)
 
 	else:

@@ -5,7 +5,7 @@ from pr2_eup.msg import RobotType
 
 ######### ADD YOUR PROGRAM BELOW ###########
 
-number_of_people = {'Table1':3, 'Table2':2}
+number_of_people = {'Table1':2, 'Table2':3}
 orders = {'Table1':None, 'Table2':None}
 
 def main_loop(robot):

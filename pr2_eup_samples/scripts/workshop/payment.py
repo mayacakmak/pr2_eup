@@ -20,7 +20,7 @@ from pr2_eup.msg import RobotType
 #!/o	Go to door
 #!/o	Have a nice day… get out. 
 
-number_of_people = {'Table1':3, 'Table2':2}
+number_of_people = {'Table1':2, 'Table2':3}
 has_table_payed = {'Table1':False, 'Table2':False}
 dessert_orders = {'Table1':None, 'Table2':None}
 

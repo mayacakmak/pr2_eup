@@ -59,9 +59,9 @@ def take_person_to_table(robot, party_size):
 	robot.display_message(message=robot_line,
 		duration=8)
 	if party_size == 'two':
-		robot.go_to(location_name='Table2')
-	else:
 		robot.go_to(location_name='Table1')
+	else:
+		robot.go_to(location_name='Table2')
 
 	robot.say(text='You may be seated')
 	robot.display_message(

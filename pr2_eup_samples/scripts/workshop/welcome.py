@@ -6,80 +6,72 @@ from pr2_eup.msg import RobotType
 ######### ADD YOUR PROGRAM BELOW ###########
 
 def main_loop(robot):
-	choice = ask_choice(message='Welcome to CyberFood! Please click okay when you are ready to be seated.', choices=['Okay'])
+	choice = robot.ask_choice(message='Welcome to CyberFood! '+
+		'Please click okay to be seated.',
+		choices=['Okay'])
 		if choice == 'Okay':
-			choice = ask_choice(message='How many people are in your party?', choices=['2', '3', 'Other'])
-				if choice == '2':
-					say(text='Okay. Party of two, are you ready to be seated?')
-					choice = ask_choice(message='Okay. Party of two, are you ready to be seated?', choices=['Yes', 'Not yet', 'Cancel')
-						if choice == 'Yes':
-							say(text='please follow me')
-							display_message(message='Please follow me.', duration=8)
-							go_to(location_name='Table1')
-							say(text='please follow me')
-							display_message(message='Please follow me.', duration=8)
-							go_to(location_name='Table2')
-					    		say(text='You may be seated')
-							display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
-							say(text='Your server will be with you shortly. Thank you')
-							display_message(message='Thank you', duration=5)
-							go_to(location_name='Door')
-						else if choice == 'Not yet'
-							say(text='Okay, I will wait. Press okay when you are ready to be seated')
-							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
-								if choice == 'Okay'
-									say(text='please follow me')
-							    		display_message(message='Please follow me.', duration=8)
-							    		go_to(location_name='Table1')
-							    		say(text='please follow me')
-							    		display_message(message='Please follow me.', duration=8)
-							    		go_to(location_name='Table2')
-							    		say(text='You may be seated')
-									display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
-									say(text='Your sever will be with you shortly. Thank you')
-									display_message(message='Thank you', duration=5)
-									go_to(location_name='Door')
-						else:
-						    say(text='Restarting seating program, please wait.')
-							display_message(message='Restarting seating program, please wait.', duration=8)
-				else if choice == '3':
-				    say(text='Okay. Party of three, are you ready to be seated?')
-					choice = ask_choice(message='Okay. Party of three, are you ready to be seated?', choices=['Yes', 'Not yet', 'cancel')
-						if choice == 'Yes':
-							say(text='please follow me')
-							display_message(message='Please follow me.', duration=8)
-							go_to(location_name='Table2')
-								say(text='please follow me')
-							    	display_message(message='Please follow me.', duration=8)
-								go_to(location_name='Table2')
-						    		say(text='You may be seated')
-								display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
-								say(text='Your sever will be with you shortly. Thank you')
-								display_message(message='Thank you', duration=5)
-								go_to(location_name='Door')
-						else if choice == 'Not yet'
-							say(text='Okay, I will wait. Press okay when you are ready to be seated')
-							choice = ask_choice(message=''Okay, I will wait. Press okay when you are ready to be seated', choices=['Okay'])
-								if choice == 'Okay'
-									say(text='please follow me')
-							    		display_message(message='Please follow me.', duration=8)
-							    		go_to(location_name='Table2')
-							    		say(text='You may be seated')
-									display_message(message='You may be seated. Your server will be with you shortly.', duration=8)
-									say(text='Your sever will be with you shortly. Thank you')
-									display_message(message='Thank you', duration=5)
-									go_to(location_name='Door')
+			robot_line = 'How many people are in your party?'
+			robot.say(text=robot_line)
+			choice = robot.ask_choice_display_and_voice(
+				message=robot_line,
+				choices=['two', 'three', 'no-thank-you'])
+				if choice == 'two' or choice == 'three' :
+					robot_line = 'Okay. Party of '+ choice +
+					', are you ready to be seated?'
+					robot.say(text=robot_line)
+					choice = robot.ask_choice_display_and_voice(
+						message=robot_line,
+						choices=['yes', 'not-yet', 'cancel'])
+
+						if choice == 'yes':
+							take_person_to_table(robot, choice)
+
+						else if choice == 'not-yet':
+							robot_line = 'Okay, I will wait. '+
+								'Press okay when you are ready to be seated'
+							robot.say(text=robot_line)
+							robot.ask_choice(
+								message=robot_line, choices=['Okay'])
+							if choice == 'Okay'
+								take_person_to_table(robot, choice)
 
 						else:
-						    say(text='Restarting seating program, please wait.')
-							display_message(message='Restarting seating program, please wait.', duration=8)
+							robot_line = 'Restarting seating program, please wait.'
+						    robot.say(text=robot_line)
+							robot.display_message(
+								message=robot_line, duration=8)
 				else:
-				    say(text='I am sorry, but we only seat parties of two and three.')
-					display_message(message='I am sorry, but we only seat parties of two and three.', duration=8)
-					say(text='Restarting seating program, please wait.')
-					display_message(message='Restarting seating program, please wait.', duration=8)
+					robot_line = 'I am sorry, but we only seat parties of two and three.'
+				    robot.say(text=robot_line)
+					robot.display_message(message=robot_line, duration=8)
+					robot_line = 'Restarting seating program, please wait.'
+					robot.say(text=robot_line)
+					robot.display_message(message=robot_line, duration=8)
 
     robot.sleep(duration=5)
+
+
+def take_person_to_table(robot, choice):
+
+	robot_line = 'please follow me'
+	robot.say(text=robot_line)
+	robot.display_message(message=robot_line,
+		duration=8)
+	if choice == 'two':
+		robot.go_to(location_name='Table2')
+	else:
+		robot.go_to(location_name='Table1')
+
+	robot.say(text='You may be seated')
+	robot.display_message(
+		message='You may be seated. ' +
+		'Your server will be with you shortly.',
+		duration=8)
+	robot.say(text='Your server will be with you shortly. ' +
+		'Thank you')
+	robot.display_message(message='Thank you',
+		duration=5)
+	robot.go_to(location_name='Door')
 
 
 ############################################

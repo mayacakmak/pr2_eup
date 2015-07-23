@@ -100,6 +100,17 @@ class Robot(object):
         return action_monitor.join()
 
     @staticmethod
+    def wait_multiple(action_monitors):
+        while True:
+            for i in range(length(action_monitors)):
+                monitor = action_monitors[i]
+                if not monitor.is_alive():
+                    rospy.loginfo('Monitors ' + str(i)
+                        + ' detected an event')
+                    return monitor.get_result()
+            rospy.sleep(0.1)
+
+    @staticmethod
     def sleep(duration):
         rospy.sleep(duration)
 
@@ -144,9 +155,11 @@ class Robot(object):
     def move(self, **kwargs):
         Robot.do(self.navigation.move,
             **kwargs)
+    ## TODO: rename this as start_play_sound b/c that how it behaves
     def play_sound(self, **kwargs):
         Robot.do(self.voice.play_sound,
             **kwargs)
+    ## TODO: rename this as start_say b/c that how it behaves
     def say(self, **kwargs):
         Robot.do(self.voice.say,
             **kwargs)

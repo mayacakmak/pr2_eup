@@ -12,20 +12,20 @@ def main_loop(robot):
     if numPeople == 'yes':
     	robot.say(text = 'Okay, follow me')
     	robot.sleep(duration=3)
-    	go_to(location_name = 'Table1')
+    	robot.go_to(location_name = 'Table1')
     else:
     	robot.say(text = 'Okay, follow me')
     	robot.sleep(duration=3)
-    	go_to(location_name = 'Table2')
+    	robot.go_to(location_name = 'Table2')
     robot.say(text = 'Would you like soup or salad?')
     appetizerChoice = robot.wait_for_speech(commands=['soup','salad'])
     robot.go_to(location_name = 'Kitchen')
     robot.say(text = 'They ordered' + appetizerChoice)
     robot.sleep(duration=20)
     if numPeople == 'yes':
-        go_to(location_name = 'Table1')
+        robot.go_to(location_name = 'Table1')
     else:
-        go_to(location_name = 'Table2')
+        robot.go_to(location_name = 'Table2')
     robot.say(text = 'Enjoy your meal!')
 
 #############################################

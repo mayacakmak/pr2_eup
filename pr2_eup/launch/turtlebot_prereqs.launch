@@ -4,7 +4,7 @@
   <!-- <param name="/use_sim_time" value="true" />-->
 
   <!-- Map server -->
-  <arg name="map_file" default="$(find pr2_eup)/map/workshop_map.yaml"/>
+  <arg name="map_file" default="$(find pr2_eup)/map/workshop_map_tables.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
   <!-- Localization -->

@@ -5,20 +5,6 @@ from pr2_eup.msg import RobotType
 
 ######### ADD YOUR PROGRAM BELOW ###########
 
-#!/List
-#!/•	Payment
-#!/o	Are you done?
-#!/	Yes take plate
-#!/o	Did you enjoy your meal
-#!/o	Anything else
-#!/o	Okay, please pay—credit only
-#!/o	Show total on screen
-#!/o	Scan card
-#!/o	Thank you. Tips are appreciated. This job doesn’t pay me enough.
-#!/o	Screen for tips
-#!/o	Please follow me to the door
-#!/o	Go to door
-#!/o	Have a nice day… get out. 
 
 number_of_people = {'Table1':2, 'Table2':3}
 has_table_paid = {'Table1':False, 'Table2':False}

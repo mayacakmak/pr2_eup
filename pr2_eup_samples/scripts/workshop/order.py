@@ -5,54 +5,94 @@ from pr2_eup.msg import RobotType
 
 ######### ADD YOUR PROGRAM BELOW ###########
 
+number_of_people = {'Table1':3, 'Table2':2}
+orders = {'Table1':None, 'Table2':None}
+
 def main_loop(robot):
-    robot.sleep(duration=5)
-    choice = ask_choice(message='How many people are ordering?', choices=['1', '2'])
-    if choice == '1':
-        choice = ask_choice(message='What would you like to eat?', choices=['sandwich', 'spaghetti', 'hamburger''])
-        if choice == 'sandwich':
-            display_message(message='OK.', duration=1)
-        else if choice == 'spaghetti':
-            display_message(message='OK.', duration=1)
-        else if choice == 'hamburger':
-            display_message(message='OK.', duration=1)
-    if choice =='2':
-        choice="ask_choice(message='Which person is ordering?', choices=['1', '2'])
-        if choice == '1':
-            choice = ask_choice(message='What would you like to eat?', choices=['sandwich', 'spaghetti', 'hamburger'])
-            if choice == 'sandwich':
-                display_message(message='OK.', duration=1)
-                choice="ask_choice(message='Which person is ordering?', choices=['2])
-                if choice == '2':
-                    choice = ask_choice(message='What would you like to eat?', choices=['sandwich', 'spaghetti', 'hamburger'])
-                    if choice = = 'sandwich':
-                        display_message(message='OK.', duration=1)
-                    else if choice = = 'spaghetti':
-                        display_message(message='OK.', duration=1)
-                    else if choice == 'hamburger':
-                        display_message(message='OK.', duration=1)
-            if choice == 'spaghetti':
-                display_message(message='OK.', duration=1)
-                choice="ask_choice(message='Which person is ordering?', choices=['2])
-                if choice == '2':
-                    choice = ask_choice(message='What would you like to eat?', choices=['sandwich', 'spaghetti', 'hamburger'])
-                    if choice = = 'sandwich':
-                        display_message(message='OK.', duration=1)
-                    else if choice = = 'spaghetti':
-                        display_message(message='OK.', duration=1)
-                    else if choice == 'hamburger':
-                        display_message(message='OK.', duration=1)
-            if choice == 'hamburger':
-                display_message(message='OK.', duration=1)
-                choice="ask_choice(message='Which person is ordering?', choices=['2])
-                if choice == '2':
-                    choice = ask_choice(message='What would you like to eat?', choices=['sandwich', 'spaghetti', 'hamburger'])
-                    if choice = = 'sandwich':
-                        display_message(message='OK.', duration=1)
-                    else if choice = = 'spaghetti':
-                        display_message(message='OK.', duration=1)
-                    else if choice == 'hamburger':
-                        display_message(message='OK.', duration=1)
+
+    robot.go_to(location_name='Kitchen')
+    
+    if orders['Table1'] is None or orders['Table2'] is None:
+
+        robot.say(text='I am ready to take orders.')
+        table_choice = robot.ask_choice(
+            message='Which table should I take the order from?',
+            choices=['Table1', 'Table2'])
+
+        if orders[table_choice] is not None:
+            robot.go_to(location_name=table_choice)
+            robot_line = 'Are you ready to order?'
+            robot.say(text=robot_line)
+            choice = robot.ask_choice_display_and_voice(message=robot_line,
+                choices=['yes', 'no'])
+            if choice == 'no':
+                robot_line = 'Okay, I will come back later.'
+                robot.say(text=robot_line)
+                robot.display_message(message=robot_line)
+                robot.go_to('Kitchen')
+            else:
+                robot_line = 'Okay, great.'
+                robot.display_message(message=robot_line)
+                robot.say(text=robot_line)
+                robot.turn_right(duration=1)
+                orders[table_choice] = 'one ' + take_order(robot)
+                robot.turn_left(duration=1)
+                orders[table_choice] = orders[table_choice] + ', one ' + take_order(robot)
+                if number_of_people[table_choice] == 3:
+                    robot.turn_left(duration=1)
+                    orders[table_choice] = orders[table_choice] + ', one ' + take_order(robot)
+                robot.turn_right(duration=1)
+                robot_line = 'Great! You ordered ' + orders[table_choice] + '. Is that correct?'
+                robot.say(text=robot_line)
+                choice = robot.ask_choice_display_and_voice(message=robot_line,
+                    choices=['yes', 'no'])
+                if choice == 'no':
+                    robot_line = 'Well, too bad because that is what I will bring.'
+                else:
+                    robot_line = 'Great.'
+                robot.say(text=robot_line)
+                robot.display_message(message=robot_line, duration=3)
+                robot.display_message(message='Going to kitchen')
+                robot.go_to(location_name='Kitchen')
+                robot_line = 'Rosie the chef, we need ' + orders[table_choice] + ' for ' + table_choice
+                robot.say(text=robot_line)
+                robot.display_message(message=robot_line)
+                robot.sleep(duration=5)
+        else:
+            robot_line = table_choice + ' already ordered.'
+            robot.display_message(message=robot_line)
+            robot.say(text=robot_line)
+
+
+    ## DELIVERY
+
+    else:
+
+        robot.say(text='I am ready to deliver orders.')
+        table_choice = robot.ask_choice(
+            message='Which table should I deliver this?',
+            choices=['Table1', 'Table2'])
+
+        robot.go_to(location_name=table_choice)
+        robot_line = 'Here is your food: ' + orders[table_choice] + '. Please take your plates and press okay.'
+        robot.say(text=robot_line)
+        robot.ask_choice(message=robot_line, choices=['OK'])
+        robot_line = 'Enjoy your food!'
+        robot.say(text=robot_line)
+        robot.display_message(message=robot_line)
+        robot.go_to(location_name='Kitchen')
+
+
+def take_order(robot):
+    robot_line = 'What would you like to eat?'
+    robot.say(text=robot_line)
+    choice = robot.ask_choice_display_and_voice(message=robot_line,
+                choices=['sandwich', 'spaghetti', 'hamburger', 'soup', 'salad'])
+    robot_line = 'Okay'
+    robot.say(text=robot_line)
+    robot.display_message(message=robot_line)
+    robot.sleep(duration=1)
+    return choice
 
 
 

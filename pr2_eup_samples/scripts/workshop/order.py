@@ -94,8 +94,6 @@ def take_order(robot):
     robot.sleep(duration=1)
     return choice
 
-
-
 ############################################
 
 if __name__ == '__main__':

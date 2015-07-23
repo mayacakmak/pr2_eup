@@ -20,71 +20,146 @@ from pr2_eup.msg import RobotType
 #!/o	Go to door
 #!/o	Have a nice day… get out. 
 
-def main_loop(robot):
-    if dessert == ‘Yes’
-	robot.go_to(location_name = ‘Table1’)
-else
-	robot.say(text = ‘Are you finished with your meal? Answers are, yes, no, or, almost’)
-	finished_meal = robot.wait_for_speech(commands = [‘Yes’, ‘No’, ‘Almost’])
-	while not got_response1:
-if finished_meal = ‘Yes’
-		robot.say(text = ‘Great. Please give me your plate.’)
-		robot.sleep(duration = 5)
-		robot.say(text = “Did you enjoy your meal? Answers are, yes, or, no.’)
-		enjoy_answer = robot.wait_for_speech(commands = [‘Yes’, ‘No’])
-			while not got_response; 
-			if enjoy_answer == ‘Yes’
-				robot.say(text = ‘Good, I’m glad.’)	
-				got_response = True
-			else if enjoy_answer == ‘No’
-				robot.say(text = “Oh no. I’m sorry’)
-				got_response = True
-			robot.turn_right(duration = 1)
-			robot.turn_left(duration = 1)
-			robot.turn_right(duration =1)
-			robot.turn_left(duration = 1)
-		else
-robot.say(text = ‘I’m sorry, I didn’t hear you. Please speak loudly and slowly.’)
-			got_response = False
-	robot.say(text = ‘Are you ready to pay? Answers are, yes, or, no’)
-	y = robot.wait_for_speech([‘Yes’, ‘No’])
-		while not got_response2
-		if y == ‘Yes’
-			robot.say(text = ‘Okay, your total will be displayed on the screen.’)
-			if dessert == ‘Yes’
-				robot.display_message(‘$15’, duration = 8)
-			if dessert == ‘No’
-				robot.display_message(‘$10’, duration = 8)
-robot.say(text = ‘Please scan your card by holding it in front of the camera’)
-robot.sleep(duration = 3)
-robot.say(text = ‘Thank you. Tips are appreciated. Use the screen to leave a tip’)
-			c = robot.ask_choice(‘Select a tip amount’, choices = [‘$0’, ‘$1’, ‘$2’])
-			robot.say(text = ‘Thank you. Please follow me to the door’)
-			robot.go_to(location_name = ‘Door’)
-robot.say(text = ‘Please leave now. If you are not out in 10 seconds I will self-destruct)
-			got_response2 = True
-		else if  y== ‘No’
-			robot.say(‘Okay, I will be back soon. Please do not leave the restaurant.’)
-			robot.go_to(location_name = ‘Kitchen’)
-			robot.sleep(duration = 5)
-			robot.go_to(location_name = ‘Table1’)
-			got_response2 = False
-		else
-robot.say(text = ‘Sorry, I didn’t hear you. Please speak loudly and slowly’)
-			got_response2 = False
-	got_response1 = ‘true’
-	
-	else if finished_meal == ‘No’
-		robot.say(text = ‘Okay, I’ll be back later’)
-		robot.go_to(location_name = ‘Kitchen’)
-		robot.sleep(duration = 10)
-		robot.go_to(location_name = ‘Table’)
-		got_response1 = False
-	else
-		say(text = “Sorry, I didn’t hear you. Please speak loudly and slowly)
-		got_response1 = False
+number_of_people = {'Table1':3, 'Table2':2}
+has_table_payed = {'Table1':False, 'Table2':False}
+dessert_orders = {'Table1':None, 'Table2':None}
 
-    robot.sleep(duration=5)
+def main_loop(robot):
+    
+    if has_table_payed['Table1'] and has_table_payed['Table2']:
+		
+		robot.say(text='Both tables have payed. We are done for today Rosie.')
+		robot.sleep(duration=10)
+
+	else:
+		robot.display_message(message='Going to kitchen')
+		robot.go_to(location_name='Kitchen')
+        robot.say(text='I am ready to take payments.')
+        table_choice = robot.ask_choice(
+            message='Which table should I take payments from?',
+            choices=['Table1', 'Table2'])
+		robot.display_message(message='Going to ' + table_choice)
+        robot.go_to(location_name=table_choice)
+
+        if dessert_orders[table_choice] is None:
+        	# Ask only if desert was not previously ordered
+	        robot_line = 'Would you like some dessert?'
+        	robot.say(text=robot_line)
+        	dessert = robot.ask_choice_display_and_voice(message=robot_line,
+            	choices=['yes', 'no'])
+
+			if dessert == 'yes':
+				desert_orders[table_choice] = take_dessert_order(robot)
+				robot_line = 'Great! One ' + dessert_orders[table_choice] + ' coming up.'
+				robot.say(text=robot_line)
+				robot.display_message(message=robot_line)
+				robot.go_to(location_name='Kitchen')
+				robot_line = 'Rosie the chef, we need one ' + dessert_orders[table_choice] + ' for ' + table_choice
+				robot.say(text=robot_line)
+				robot.display_message(message=robot_line)
+				robot.sleep(duration=5)
+				robot.ask_choice(message='Press OK when desert is ready.', choices=['OK'])
+				robot.go_to(location_name=table_choice)
+				robot_line = 'Here is your ' + dessert_orders[table_choice] + '. Please take your plates and press OK.'
+				robot.say(text=robot_line)
+				robot.ask_choice(message=robot_line, choices=['OK'])
+				robot_line = 'Enjoy your desert!'
+				robot.say(text=robot_line)
+				robot.display_message(message=robot_line)
+				robot.go_to(location_name='Kitchen')
+		
+		if dessert_orders[table_choice] is not None or dessert == 'no':
+			# Start payment process
+			
+			got_response1 =  False
+			while not got_response1:
+				robot_line = 'Are you finished with your meal? Answers are, yes, no, or, almost.'
+				robot.say(text=robot_line)
+				finished_meal = robot.ask_choice_display_and_voice(message=robot_line,
+					choices = ['yes', 'no', 'almost'])
+				if finished_meal = 'yes':
+					robot.say(text = 'Great. Please give me your plate.')
+					robot.sleep(duration = 5)
+					got_response = False
+					while not got_response:
+						robot_line = 'Did you enjoy your meal? Answers are, yes, or, no.'
+						robot.say(text = robot_line)
+						enjoy_answer = robot.ask_choice_display_and_voice(message=robot_line,
+							choices = ['yes', 'no'])
+						if enjoy_answer == 'yes':
+							robot.say(text = 'Good, I am glad.')
+							robot.sleep(duration=1)
+							got_response = True
+						elif enjoy_answer == 'no':
+							robot.say(text = 'Oh no. I am sorry')
+							got_response = True
+							robot.turn_right(duration = 1)
+							robot.turn_left(duration = 1)
+							robot.turn_right(duration =1)
+							robot.turn_left(duration = 1)
+						else:
+							robot.say(text = 'I am sorry, I did not hear you. ' +
+								'Please speak loudly and quickly.')
+							robot.sleep(duration=3)
+
+					got_response2 = False
+					while not got_response2:
+						robot_line = 'Are you ready to pay? Answers are, yes, or, no'
+						robot.say(text = robot_line)
+						ready_answer = robot.ask_choice_display_and_voice(message=robot_line,
+							choices = ['yes', 'no'])
+
+						if ready_answer == 'yes':
+							if dessert_orders[table_choice] is not None:
+								total = '$15'
+							else:
+								total = '$10'
+
+							robot.say(text = 'Okay, your total will be displayed on the screen. ' +
+								'Please scan your card by holding it in front of the camera and press OK.')
+							robot.ask_choice(message='Your total is ' + str(total) + 
+								'. Please scan your card by holding it in front of the camera and press OK.',
+								choices='OK')
+							robot.say(text = 'Thank you. Tips are appreciated. ' +
+								'Use the screen to leave a tip.')
+							tip_amount = robot.ask_choice(message='Select a tip amount', 
+								choices = ['$0', '$1', '$2'])
+							robot.say(text = 'Thank you. Please follow me to the door')
+							robot.sleep(2)
+							robot.go_to(location_name = 'Door')
+							robot.say(text = 'Please leave now. If you are not out in 10 seconds ' +
+								'I will self-destruct. Good bye.')
+							robot.sleep(duration=2)
+							robot.display_message('Going back to kitchen.')
+							robot.go_to(location_name='Kitchen')
+							got_response2 = True
+						else:
+							robot.sleep(duration=5)
+
+				elif finished_meal == 'no':
+					robot.say(text='Okay, I will be back soon. Please do not leave the restaurant.')
+					robot.sleep(duration=3)
+					robot.go_to(location_name = 'Kitchen')
+					robot.sleep(duration = 5)
+					robot.go_to(location_name = table_choice)
+		else:
+			robot.say(text = 'Sorry, I did not hear you. Please speak loudly and quickly')
+			robot.sleep(duration=3)
+
+	robot.display_message(message='Restarting payment process.', duration=5, has_timeout=True)
+
+
+def take_dessert_order(robot):
+    robot_line = ('What would you like for dessert? We have chocolate hazelnut, ' +
+    	'creme brulee, dark roux, and creole remoulade.')
+    robot.say(text=robot_line)
+    choice = robot.ask_choice_display_and_voice(message=robot_line,
+    	choices=['chocolate-hazelnut', 'creme-brulee', 'dark-roux', 'creole-remoulade'])
+    robot_line = 'Okay'
+    robot.say(text=robot_line)
+    robot.display_message(message=robot_line)
+    robot.sleep(duration=1)
+    return choice
 
 
 ############################################

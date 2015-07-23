@@ -5,41 +5,38 @@ from pr2_eup.msg import RobotType
 
 ######### ADD YOUR PROGRAM BELOW ###########
 
-
 number_of_people = {'Table1':2, 'Table2':3}
 has_table_paid = {'Table1':False, 'Table2':False}
 dessert_orders = {'Table1':None, 'Table2':None}
 
 def main_loop(robot):
-    
-    if has_table_paid['Table1'] and has_table_paid['Table2']:
-		
+	
+	if has_table_paid['Table1'] and has_table_paid['Table2']:
 		robot.say(text='Both tables have paid. We are done for today Rosie.')
 		robot.sleep(duration=10)
-
 	else:
 		robot.display_message(message='Going to kitchen')
 		robot.go_to(location_name='Kitchen')
-        robot.say(text='I am ready to take payments.')
-        table_choice = robot.ask_choice(
-            message='Which table should I take payments from?',
-            choices=['Table1', 'Table2'])
+		robot.say(text='I am ready to take payments.')
+		table_choice = robot.ask_choice(
+			message='Which table should I take payments from?',
+			choices=['Table1', 'Table2'])
 		robot.display_message(message='Going to ' + table_choice)
-        robot.go_to(location_name=table_choice)
+		robot.go_to(location_name=table_choice)
 
-        if dessert_orders[table_choice] is None:
-        	# Ask only if desert was not previously ordered
-	        robot_line = 'Would you like some dessert?'
-        	robot.say(text=robot_line)
-        	dessert = robot.ask_choice_display_and_voice(message=robot_line,
-            	choices=['yes', 'no'])
-
+		if dessert_orders[table_choice] is None:
+		# Ask only if desert was not previously ordered
+			robot_line = 'Would you like some dessert?'
+			robot.say(text=robot_line)
+			dessert = robot.ask_choice_display_and_voice(message=robot_line,
+				choices=['yes', 'no'])
 			if dessert == 'yes':
-				desert_orders[table_choice] = take_dessert_order(robot)
+				dessert_orders[table_choice] = take_dessert_order(robot)
 				robot_line = 'Great! One ' + dessert_orders[table_choice] + ' coming up.'
 				robot.say(text=robot_line)
 				robot.display_message(message=robot_line)
 				robot.go_to(location_name='Kitchen')
+				robot.say(text=robot_line)
 				robot_line = 'Rosie the chef, we need one ' + dessert_orders[table_choice] + ' for ' + table_choice
 				robot.say(text=robot_line)
 				robot.display_message(message=robot_line)
@@ -63,7 +60,7 @@ def main_loop(robot):
 				robot.say(text=robot_line)
 				finished_meal = robot.ask_choice_display_and_voice(message=robot_line,
 					choices = ['yes', 'no', 'almost'])
-				if finished_meal = 'yes':
+				if finished_meal == 'yes':
 					robot.say(text = 'Great. Please give me your plate.')
 					robot.sleep(duration = 5)
 					got_response = False
@@ -103,9 +100,11 @@ def main_loop(robot):
 
 							robot.say(text = 'Okay, your total will be displayed on the screen. ' +
 								'Please scan your card by holding it in front of the camera and press OK.')
+							
 							robot.ask_choice(message='Your total is ' + str(total) + 
 								'. Please scan your card by holding it in front of the camera and press OK.',
-								choices='OK')
+								choices=['OK'])
+							has_table_paid[table_choice] = True
 							robot.say(text = 'Thank you. Tips are appreciated. ' +
 								'Use the screen to leave a tip.')
 							tip_amount = robot.ask_choice(message='Select a tip amount', 
@@ -116,9 +115,10 @@ def main_loop(robot):
 							robot.say(text = 'Please leave now. If you are not out in 10 seconds ' +
 								'I will self-destruct. Good bye.')
 							robot.sleep(duration=2)
-							robot.display_message('Going back to kitchen.')
+							robot.display_message(message='Going back to kitchen.')
 							robot.go_to(location_name='Kitchen')
 							got_response2 = True
+							got_response1 = True
 						else:
 							robot.sleep(duration=5)
 
@@ -128,11 +128,13 @@ def main_loop(robot):
 					robot.go_to(location_name = 'Kitchen')
 					robot.sleep(duration = 5)
 					robot.go_to(location_name = table_choice)
+				elif finished_meal == 'almost':
+					robot.sleep(duration=5)
 		else:
 			robot.say(text = 'Sorry, I did not hear you. Please speak loudly and quickly')
 			robot.sleep(duration=3)
 
-	robot.display_message(message='Restarting payment process.', duration=5, has_timeout=True)
+	robot.display_message(message='Restarting payment process.', duration=5)
 
 
 def take_dessert_order(robot):

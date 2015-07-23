@@ -22,12 +22,12 @@ def main_loop(robot):
 			robot.say(text=robot_line)
 			choice = robot.ask_choice_display_and_voice(
 				message=robot_line,
-				choices=['yes', 'not-yet', 'cancel'])
+				choices=['yes', 'not yet', 'cancel'])
 
 			if choice == 'yes':
 				take_person_to_table(robot, party_size)
 
-			elif choice == 'not-yet':
+			elif choice == 'not yet':
 				robot_line = ('Okay, I will wait. ' +
 					'Press okay when you are ready to be seated')
 				robot.say(text=robot_line)
@@ -40,7 +40,7 @@ def main_loop(robot):
 				robot_line = 'Restarting seating program, please wait.'
 				robot.say(text=robot_line)
 				robot.display_message(
-					message=robot_line, duration=8)
+					message=robot_line, duration=5)
 		else:
 			robot_line = 'I am sorry, but we only seat parties of two and three. ' +
 				'Please come again. Have a nice day.'
@@ -71,8 +71,6 @@ def take_person_to_table(robot, party_size):
 		duration=8)
 	robot.say(text='Your server will be with you shortly. ' +
 		'Thank you')
-	robot.display_message(message='Thank you',
-		duration=5)
 	robot.go_to(location_name='Door')
 
 

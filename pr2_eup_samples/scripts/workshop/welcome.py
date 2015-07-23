@@ -68,7 +68,7 @@ def take_person_to_table(robot, party_size):
 	robot.display_message(
 		message='You may be seated. ' +
 		'Your server will be with you shortly.',
-		duration=8)
+		duration=5)
 	robot.say(text='Your server will be with you shortly. ' +
 		'Thank you')
 	robot.go_to(location_name='Door')

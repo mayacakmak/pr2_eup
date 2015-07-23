@@ -46,10 +46,11 @@ def main_loop(robot):
 				robot_line = 'Here is your ' + dessert_orders[table_choice] + '. Please take your plates and press OK.'
 				robot.say(text=robot_line)
 				robot.ask_choice(message=robot_line, choices=['OK'])
-				robot_line = 'Enjoy your desert!'
+				robot_line = 'Enjoy your dessert!'
 				robot.say(text=robot_line)
 				robot.display_message(message=robot_line)
 				robot.go_to(location_name='Kitchen')
+				return
 		
 		if dessert_orders[table_choice] is not None or dessert == 'no':
 			# Start payment process

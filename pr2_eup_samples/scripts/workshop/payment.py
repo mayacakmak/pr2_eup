@@ -21,14 +21,14 @@ from pr2_eup.msg import RobotType
 #!/o	Have a nice day… get out. 
 
 number_of_people = {'Table1':2, 'Table2':3}
-has_table_payed = {'Table1':False, 'Table2':False}
+has_table_paid = {'Table1':False, 'Table2':False}
 dessert_orders = {'Table1':None, 'Table2':None}
 
 def main_loop(robot):
     
-    if has_table_payed['Table1'] and has_table_payed['Table2']:
+    if has_table_paid['Table1'] and has_table_paid['Table2']:
 		
-		robot.say(text='Both tables have payed. We are done for today Rosie.')
+		robot.say(text='Both tables have paid. We are done for today Rosie.')
 		robot.sleep(duration=10)
 
 	else:
@@ -82,7 +82,7 @@ def main_loop(robot):
 					robot.sleep(duration = 5)
 					got_response = False
 					while not got_response:
-						robot_line = 'Did you enjoy your meal? Answers are, yes, or, no.'
+						robot_line = 'Did you enjoy your meal? Answers are yes or no.'
 						robot.say(text = robot_line)
 						enjoy_answer = robot.ask_choice_display_and_voice(message=robot_line,
 							choices = ['yes', 'no'])

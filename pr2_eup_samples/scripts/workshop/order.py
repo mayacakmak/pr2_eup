@@ -7,6 +7,7 @@ from pr2_eup.msg import RobotType
 
 number_of_people = {'Table1':2, 'Table2':3}
 orders = {'Table1':None, 'Table2':None}
+delivered = {'Table1':False, 'Table2':False}
 
 def main_loop(robot):
 
@@ -71,13 +72,16 @@ def main_loop(robot):
     ## DELIVERY
 
     else:
-
+        if delivered['Table1'] and delivered['Table2']:
+            robot.say(text='Everything was delivered.')
+            robot.sleep(duration = 30)
         robot.say(text='I am ready to deliver orders.')
         table_choice = robot.ask_choice(
             message='Which table should I deliver this?',
             choices=['Table1', 'Table2'])
 
         robot.go_to(location_name=table_choice)
+        delivered[table_choice] = True
         robot_line = 'Here is your food: ' + orders[table_choice] + '. Please take your plates and press okay.'
         robot.say(text=robot_line)
         robot.ask_choice(message=robot_line, choices=['OK'])

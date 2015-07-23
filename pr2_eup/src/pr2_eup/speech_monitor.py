@@ -34,15 +34,28 @@ class SpeechMonitor():
             rospy.loginfo('Unrecognized speech:' + data.data)
         self._speech_lock.release()
 
-    def join(self, timeout=None):
+    def is_alive(self):
+        self._speech_lock.acquire()
+        is_command_received = self._received_command is not None
+        self._speech_lock.release()
+        return not is_command_received
 
-        # First reset the command so we
+    def get_result(self):
+        self._speech_lock.acquire()
+        command_received = self._received_command
+        self._speech_lock.release()
+        return command_received
+
+    def start(self):
+        # Reset the command so we
         # start listening now and ignore the past
         self._speech_lock.acquire()
         self._previous_command = self._received_command
         self._received_command = None
         self._speech_lock.release()
 
+
+    def join(self, timeout=None):
         # Then wait until a command is received.
         # TODO: Timeout!
         is_command_received = False

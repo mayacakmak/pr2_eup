@@ -9,55 +9,55 @@ def main_loop(robot):
 	choice = robot.ask_choice(message='Welcome to CyberFood! '+
 		'Please click okay to be seated.',
 		choices=['Okay'])
-		if choice == 'Okay':
-			robot_line = 'How many people are in your party?'
+	if choice == 'Okay':
+		robot_line = 'How many people are in your party?'
+		robot.say(text=robot_line)
+		party_size = robot.ask_choice_display_and_voice(
+			message=robot_line,
+			choices=['two', 'three', 'other'])
+		if party_size == 'two' or party_size == 'three':
+			robot_line = ('Okay. Party of '+ party_size +
+			', are you ready to be seated?')
 			robot.say(text=robot_line)
 			choice = robot.ask_choice_display_and_voice(
 				message=robot_line,
-				choices=['two', 'three', 'no-thank-you'])
-				if choice == 'two' or choice == 'three' :
-					robot_line = 'Okay. Party of '+ choice +
-					', are you ready to be seated?'
-					robot.say(text=robot_line)
-					choice = robot.ask_choice_display_and_voice(
-						message=robot_line,
-						choices=['yes', 'not-yet', 'cancel'])
+				choices=['yes', 'not-yet', 'cancel'])
 
-						if choice == 'yes':
-							take_person_to_table(robot, choice)
+			if choice == 'yes':
+				take_person_to_table(robot, party_size)
 
-						else if choice == 'not-yet':
-							robot_line = 'Okay, I will wait. '+
-								'Press okay when you are ready to be seated'
-							robot.say(text=robot_line)
-							robot.ask_choice(
-								message=robot_line, choices=['Okay'])
-							if choice == 'Okay'
-								take_person_to_table(robot, choice)
+			elif choice == 'not-yet':
+				robot_line = ('Okay, I will wait. ' +
+					'Press okay when you are ready to be seated')
+				robot.say(text=robot_line)
+				robot.ask_choice(
+					message=robot_line, choices=['Okay'])
+				if choice == 'Okay':
+					take_person_to_table(robot, party_size)
 
-						else:
-							robot_line = 'Restarting seating program, please wait.'
-						    robot.say(text=robot_line)
-							robot.display_message(
-								message=robot_line, duration=8)
-				else:
-					robot_line = 'I am sorry, but we only seat parties of two and three.'
-				    robot.say(text=robot_line)
-					robot.display_message(message=robot_line, duration=8)
-					robot_line = 'Restarting seating program, please wait.'
-					robot.say(text=robot_line)
-					robot.display_message(message=robot_line, duration=8)
+			else:
+				robot_line = 'Restarting seating program, please wait.'
+				robot.say(text=robot_line)
+				robot.display_message(
+					message=robot_line, duration=8)
+		else:
+			robot_line = 'I am sorry, but we only seat parties of two and three.'
+			robot.say(text=robot_line)
+			robot.display_message(message=robot_line, duration=8)
+			robot_line = 'Restarting seating program, please wait.'
+			robot.say(text=robot_line)
+			robot.display_message(message=robot_line, duration=8)
 
-    robot.sleep(duration=5)
+	robot.sleep(duration=5)
 
 
-def take_person_to_table(robot, choice):
+def take_person_to_table(robot, party_size):
 
 	robot_line = 'please follow me'
 	robot.say(text=robot_line)
 	robot.display_message(message=robot_line,
 		duration=8)
-	if choice == 'two':
+	if party_size == 'two':
 		robot.go_to(location_name='Table2')
 	else:
 		robot.go_to(location_name='Table1')

@@ -102,7 +102,7 @@ class Robot(object):
     @staticmethod
     def wait_multiple(action_monitors):
         while True:
-            for i in range(length(action_monitors)):
+            for i in range(len(action_monitors)):
                 monitor = action_monitors[i]
                 if not monitor.is_alive():
                     rospy.loginfo('Monitors ' + str(i)
@@ -165,9 +165,25 @@ class Robot(object):
             **kwargs)
     def wait_for_speech(self, commands=None):
         self.speech_monitor.set_command_list(commands)
+        self.speech_monitor.start()
         received_command = Robot.wait(self.speech_monitor)
         self.speech_monitor.set_command_list(None)
         return received_command
+
+    def ask_choice_display_and_voice(self, message, choices):
+        self.speech_monitor.set_command_list(choices)
+        self.speech_monitor.start()
+        interface_monitor = Robot.start(self.interface.ask_choice,
+            message=message,
+            choices=choices)
+        result = Robot.wait_multiple([interface_monitor, self.speech_monitor])
+        self.speech_monitor.set_command_list(None)
+        return result
+
     def go_to(self, **kwargs):
-        Robot.do(self.navigation.go_to_location,
-            **kwargs)
+        is_simulation = False
+        if is_simulation:
+            rospy.loginfo('Ignoring go_to')
+        else:
+            Robot.do(self.navigation.go_to_location,
+                **kwargs)

@@ -62,7 +62,7 @@ def main_loop(robot):
 				finished_meal = robot.ask_choice_display_and_voice(message=robot_line,
 					choices = ['yes', 'no', 'almost'])
 				if finished_meal == 'yes':
-					robot.say(text = 'Great. Please give me your plate.')
+					robot.say(text = 'Great!')
 					robot.sleep(duration = 5)
 					got_response = False
 					while not got_response:
@@ -120,6 +120,9 @@ def main_loop(robot):
 							robot.go_to(location_name='Kitchen')
 							got_response2 = True
 							got_response1 = True
+						elif ready_answer == 'no'
+							robot.say(text = 'Okay, but you will have to pay sometime. I will stay here until you do.')
+							robot.sleep(duration = 7)
 						else:
 							robot.sleep(duration=5)
 

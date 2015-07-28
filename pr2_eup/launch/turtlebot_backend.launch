@@ -1,5 +1,0 @@
-<launch>
-
-<include file="$(find pr2_eup)/turtlebot_prereqs.launch" />
-
-</launch>
